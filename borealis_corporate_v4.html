@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Borealis Corporate — Programas de Team Building 100% exclusivos. Criados por guias de montanha desde 2002.">
+<title>Borealis Corporate — The Camps</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ── RESET ───────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Inter',system-ui,sans-serif;color:#1a1a18;background:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;width:100%;object-fit:cover}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+input,select,textarea{font-family:inherit}
+
+/* ── TOKENS ──────────────────────────────────────────── */
+:root{
+  --g:    #265c2e;
+  --gd:   #193e1f;
+  --gl:   #edf4ee;
+  --or:   #d25800;
+  --ink:  #111110;
+  --i2:   #3a3a38;
+  --i3:   #6a6a66;
+  --i4:   #a8a8a4;
+  --bg:   #f8f6f1;
+  --ln:   #e4e2dd;
+  --wh:   #ffffff;
+  --r:    14px;
+  --t:    220ms ease;
+}
+
+/* ── SCROLLBAR ───────────────────────────────────────── */
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#f1f1f1}
+::-webkit-scrollbar-thumb{background:var(--ln);border-radius:3px}
+
+/* ─────────────────────────────────────────────────────
+   NAV
+───────────────────────────────────────────────────── */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:400;
+  height:64px;
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+  padding:0 32px;
+  transition:background var(--t),box-shadow var(--t);
+}
+.nav.scrolled{
+  background:rgba(255,255,255,.97);
+  box-shadow:0 1px 0 var(--ln);
+  backdrop-filter:blur(12px);
+}
+.nav-left{display:flex;align-items:center;gap:6px}
+.nav-ham{
+  width:36px;height:36px;border-radius:8px;
+  display:flex;flex-direction:column;gap:5px;
+  align-items:center;justify-content:center;
+  transition:background var(--t);cursor:pointer;
+}
+.nav-ham:hover{background:rgba(255,255,255,.15)}
+.nav.scrolled .nav-ham:hover{background:var(--bg)}
+.nav-ham span{
+  display:block;width:20px;height:1.5px;
+  background:rgba(255,255,255,.9);border-radius:2px;
+  transition:background var(--t);
+}
+.nav.scrolled .nav-ham span{background:var(--ink)}
+.nav-links{display:flex;gap:2px}
+.nl{
+  padding:6px 12px;border-radius:8px;
+  font-size:13px;font-weight:500;
+  color:rgba(255,255,255,.85);
+  transition:all var(--t);
+}
+.nl:hover{background:rgba(255,255,255,.12);color:#fff}
+.nav.scrolled .nl{color:var(--i2)}
+.nav.scrolled .nl:hover{background:var(--bg);color:var(--ink)}
+
+/* Logo */
+.nav-logo{display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer}
+.logo-mark{
+  font-size:22px;font-weight:900;color:#fff;letter-spacing:-.04em;
+  transition:color var(--t);line-height:1;
+}
+.nav.scrolled .logo-mark{color:var(--gd)}
+.logo-sub{
+  font-size:8px;font-weight:600;color:rgba(255,255,255,.5);
+  letter-spacing:.14em;text-transform:uppercase;
+  transition:color var(--t);
+}
+.nav.scrolled .logo-sub{color:var(--i3)}
+
+/* Right */
+.nav-right{display:flex;align-items:center;justify-content:flex-end;gap:8px}
+.nav-cta{
+  background:var(--g);color:#fff;
+  padding:8px 20px;border-radius:40px;
+  font-size:13px;font-weight:700;
+  transition:background var(--t),transform var(--t);
+  white-space:nowrap;
+}
+.nav-cta:hover{background:var(--gd);transform:translateY(-1px)}
+.nav.scrolled .nav-cta{background:var(--g)}
+
+/* ─────────────────────────────────────────────────────
+   HERO
+───────────────────────────────────────────────────── */
+.hero{
+  position:relative;min-height:100vh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;
+  overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background-image:url('https://images.unsplash.com/photo-1551632811-561732d1e306?w=1800&auto=format&fit=crop&q=85');
+  background-size:cover;background-position:center 35%;
+  transform:scale(1.04);
+  transition:transform 8s ease;
+}
+.hero-bg.loaded{transform:scale(1)}
+.hero-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(
+    to bottom,
+    rgba(10,22,12,.35) 0%,
+    rgba(10,22,12,.55) 50%,
+    rgba(10,22,12,.78) 100%
+  );
+}
+.hero-content{
+  position:relative;z-index:1;
+  padding:120px 24px 100px;
+  max-width:860px;
+  display:flex;flex-direction:column;
+  align-items:center;
+}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:11px;font-weight:600;color:rgba(255,255,255,.75);
+  letter-spacing:.14em;text-transform:uppercase;
+  margin-bottom:24px;
+}
+.hero-eyebrow::before{
+  content:'';width:20px;height:1px;
+  background:rgba(255,255,255,.4);
+}
+.hero-eyebrow::after{
+  content:'';width:20px;height:1px;
+  background:rgba(255,255,255,.4);
+}
+.hero-h{
+  font-size:clamp(38px,6.5vw,72px);
+  font-weight:900;color:#fff;
+  line-height:1.02;letter-spacing:-.04em;
+  margin-bottom:20px;
+}
+.hero-h em{
+  font-style:italic;font-weight:300;
+  color:rgba(255,255,255,.75);
+}
+.hero-sub{
+  font-size:clamp(15px,2vw,18px);
+  color:rgba(255,255,255,.65);
+  font-weight:300;line-height:1.7;
+  max-width:520px;margin-bottom:40px;
+}
+
+/* Camp selector */
+.camp-selector{
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.2);
+  backdrop-filter:blur(16px);
+  border-radius:16px;
+  padding:8px 8px 8px 20px;
+  display:flex;align-items:center;gap:8px;
+  width:100%;max-width:560px;
+  margin-bottom:28px;
+}
+.cs-label{
+  font-size:11.5px;font-weight:600;
+  color:rgba(255,255,255,.5);letter-spacing:.06em;text-transform:uppercase;
+  white-space:nowrap;
+}
+.cs-select{
+  flex:1;background:transparent;border:none;outline:none;
+  font-size:14px;font-weight:500;color:#fff;
+  cursor:pointer;
+  -webkit-appearance:none;appearance:none;
+}
+.cs-select option{background:#1a3d21;color:#fff}
+.cs-btn{
+  background:var(--g);color:#fff;
+  padding:10px 22px;border-radius:10px;
+  font-size:14px;font-weight:700;
+  transition:background var(--t);white-space:nowrap;
+  flex-shrink:0;
+}
+.cs-btn:hover{background:var(--gd)}
+
+/* Trust pills */
+.hero-trust{
+  display:flex;align-items:center;gap:20px;
+  flex-wrap:wrap;justify-content:center;
+}
+.ht{
+  font-size:12px;font-weight:500;
+  color:rgba(255,255,255,.65);
+  display:flex;align-items:center;gap:6px;
+}
+.ht::before{content:'✓';color:rgba(255,255,255,.5)}
+.ht-sep{color:rgba(255,255,255,.25);font-size:16px}
+
+/* Scroll cue */
+.hero-scroll{
+  position:absolute;bottom:28px;left:50%;
+  transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  z-index:1;
+}
+.scroll-dot{
+  width:4px;height:4px;border-radius:50%;
+  background:rgba(255,255,255,.45);
+  animation:scrollDot 1.8s ease-in-out infinite;
+}
+.scroll-dot:nth-child(2){animation-delay:.2s}
+.scroll-dot:nth-child(3){animation-delay:.4s}
+@keyframes scrollDot{0%,100%{opacity:.3}50%{opacity:.9}}
+
+/* ─────────────────────────────────────────────────────
+   BANNER DESTAQUE  (like SiVola's featured card)
+───────────────────────────────────────────────────── */
+.banner{padding:56px 5%}
+.banner-inner{max-width:1100px;margin:0 auto}
+.banner-label{
+  font-size:11px;font-weight:800;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--or);
+  margin-bottom:16px;text-align:center;
+}
+.banner-card{
+  position:relative;
+  border-radius:var(--r);overflow:hidden;
+  height:340px;cursor:pointer;
+}
+.banner-card img{
+  height:100%;position:absolute;inset:0;
+  transition:transform .6s ease;
+}
+.banner-card:hover img{transform:scale(1.03)}
+.banner-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to right, rgba(10,22,12,.72) 0%, rgba(10,22,12,.25) 60%, transparent 100%);
+}
+.banner-text{
+  position:absolute;bottom:0;left:0;
+  padding:40px 48px;
+}
+.banner-tag{
+  display:inline-block;
+  background:var(--or);color:#fff;
+  font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:4px 10px;border-radius:4px;margin-bottom:12px;
+}
+.banner-title{
+  font-size:clamp(24px,3.5vw,38px);font-weight:800;
+  color:#fff;letter-spacing:-.03em;line-height:1.1;
+  margin-bottom:10px;max-width:480px;
+}
+.banner-sub{
+  font-size:14px;color:rgba(255,255,255,.7);
+  margin-bottom:22px;max-width:400px;line-height:1.6;
+}
+.btn-white{
+  display:inline-flex;align-items:center;gap:7px;
+  background:#fff;color:var(--ink);
+  padding:11px 22px;border-radius:40px;
+  font-size:13px;font-weight:700;
+  transition:all var(--t);
+}
+.btn-white:hover{background:var(--gl);transform:translateY(-1px)}
+.btn-white svg{transition:transform var(--t)}
+.btn-white:hover svg{transform:translateX(3px)}
+
+/* ─────────────────────────────────────────────────────
+   SECTION BASE
+───────────────────────────────────────────────────── */
+.sec{padding:72px 5%}
+.sec-inner{max-width:1100px;margin:0 auto}
+.sec-head{text-align:center;margin-bottom:48px}
+.sec-title{
+  font-size:clamp(22px,3.5vw,34px);font-weight:800;
+  color:var(--ink);letter-spacing:-.03em;
+  line-height:1.2;margin-bottom:8px;
+}
+.sec-desc{font-size:15px;color:var(--i3);max-width:460px;margin:0 auto;line-height:1.7}
+
+/* ─────────────────────────────────────────────────────
+   CAMPS GRID  (SiVola-style full-bleed cards)
+───────────────────────────────────────────────────── */
+.camps-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px;
+}
+.camp-card{
+  position:relative;border-radius:var(--r);
+  overflow:hidden;cursor:pointer;
+  aspect-ratio:4/3;
+}
+.camp-card.tall{aspect-ratio:3/4}
+.camp-card img{
+  position:absolute;inset:0;width:100%;height:100%;
+  transition:transform .55s ease;
+}
+.camp-card:hover img{transform:scale(1.06)}
+.camp-card-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(
+    to bottom,
+    transparent 30%,
+    rgba(10,18,11,.2) 60%,
+    rgba(10,18,11,.82) 100%
+  );
+}
+.camp-card-body{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:24px 22px;
+}
+.camp-badge{
+  display:inline-block;
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.2);
+  color:rgba(255,255,255,.9);
+  font-size:9.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:3px 10px;border-radius:4px;margin-bottom:10px;
+  backdrop-filter:blur(4px);
+}
+.camp-name{
+  font-size:clamp(18px,2.5vw,24px);font-weight:800;
+  color:#fff;letter-spacing:-.03em;
+  line-height:1.15;margin-bottom:6px;
+}
+.camp-tagline{
+  font-size:12px;color:rgba(255,255,255,.65);
+  line-height:1.5;margin-bottom:14px;
+}
+.camp-meta{
+  display:flex;align-items:center;justify-content:space-between;
+}
+.camp-format{
+  display:flex;align-items:center;gap:5px;
+  font-size:11.5px;color:rgba(255,255,255,.7);font-weight:500;
+}
+.camp-format svg{opacity:.7}
+.camp-cta{
+  display:flex;align-items:center;gap:6px;
+  background:var(--g);color:#fff;
+  padding:7px 14px;border-radius:40px;
+  font-size:12px;font-weight:700;
+  transition:background var(--t);
+}
+.camp-cta:hover{background:var(--gd)}
+
+/* 3-column variant for bottom row */
+.camps-grid-3{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+  margin-top:18px;
+}
+.camp-card-sm{aspect-ratio:5/4}
+
+/* See all CTA */
+.sec-see-all{text-align:center;margin-top:36px}
+.btn-outline{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1.5px solid var(--ln);color:var(--i2);
+  padding:12px 28px;border-radius:40px;
+  font-size:14px;font-weight:600;
+  transition:all var(--t);
+}
+.btn-outline:hover{border-color:var(--ink);color:var(--ink);background:var(--bg)}
+
+/* ─────────────────────────────────────────────────────
+   PRÓXIMAS DATAS  (SiVola list style)
+───────────────────────────────────────────────────── */
+.datas{background:var(--bg)}
+.datas-list{display:flex;flex-direction:column;gap:10px}
+.data-row{
+  background:#fff;border-radius:12px;
+  padding:18px 24px;
+  display:grid;grid-template-columns:64px 1px 1fr auto auto;
+  align-items:center;gap:16px;
+  transition:box-shadow var(--t),transform var(--t);
+  border:1px solid var(--ln);
+}
+.data-row:hover{box-shadow:0 4px 20px rgba(0,0,0,.08);transform:translateY(-1px)}
+.data-date{text-align:center}
+.data-day{font-size:26px;font-weight:800;color:var(--ink);line-height:1}
+.data-month{
+  font-size:10px;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--i4);
+}
+.data-dur{font-size:9.5px;color:var(--i4);margin-top:2px}
+.data-sep{width:1px;height:40px;background:var(--ln);flex-shrink:0}
+.data-name{
+  font-size:15px;font-weight:700;color:var(--ink);
+  letter-spacing:-.02em;margin-bottom:3px;
+}
+.data-sub{font-size:12px;color:var(--i3)}
+.data-spots{
+  font-size:12px;font-weight:600;color:var(--or);
+  white-space:nowrap;
+}
+.data-cta{
+  background:var(--g);color:#fff;
+  padding:9px 18px;border-radius:40px;
+  font-size:13px;font-weight:700;
+  white-space:nowrap;
+  transition:background var(--t);
+}
+.data-cta:hover{background:var(--gd)}
+
+/* ─────────────────────────────────────────────────────
+   SOBRE (about)
+───────────────────────────────────────────────────── */
+.sobre-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;
+}
+.sobre-kicker{
+  font-size:11px;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--g);
+  margin-bottom:16px;
+}
+.sobre-h{
+  font-size:clamp(24px,3.5vw,38px);font-weight:800;
+  color:var(--ink);letter-spacing:-.03em;
+  line-height:1.15;margin-bottom:20px;
+}
+.sobre-p{
+  font-size:15px;color:var(--i2);line-height:1.78;
+  margin-bottom:16px;
+}
+.sobre-quote{
+  border-left:3px solid var(--g);
+  padding:14px 20px;background:var(--gl);
+  border-radius:0 10px 10px 0;margin:24px 0;
+  font-size:14px;font-style:italic;
+  color:var(--i2);line-height:1.7;
+}
+.stats-row{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:24px;margin-top:32px;
+}
+.stat-item{padding-top:16px;border-top:2px solid var(--gl)}
+.stat-num{
+  font-size:32px;font-weight:900;color:var(--g);
+  letter-spacing:-.04em;line-height:1;margin-bottom:4px;
+}
+.stat-lbl{font-size:11px;color:var(--i3);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.sobre-imgs{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.sobre-img-wrap{border-radius:var(--r);overflow:hidden}
+.sobre-img-wrap img{height:260px}
+.sobre-img-wrap:first-child{margin-top:32px}
+
+/* ─────────────────────────────────────────────────────
+   GUIAS  (SiVola coordinatori-style)
+───────────────────────────────────────────────────── */
+.guias{background:var(--bg)}
+.guias-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:20px;margin-top:48px;
+}
+.guia-card{
+  background:#fff;border-radius:var(--r);
+  overflow:hidden;border:1px solid var(--ln);
+  transition:transform var(--t),box-shadow var(--t);
+}
+.guia-card:hover{transform:translateY(-5px);box-shadow:0 16px 48px rgba(0,0,0,.1)}
+.guia-photo{height:260px;overflow:hidden;position:relative}
+.guia-photo img{height:100%;transition:transform .5s ease}
+.guia-card:hover .guia-photo img{transform:scale(1.04)}
+.guia-tag{
+  position:absolute;top:14px;right:14px;
+  background:rgba(255,255,255,.92);
+  font-size:10px;font-weight:700;
+  color:var(--g);letter-spacing:.06em;text-transform:uppercase;
+  padding:4px 10px;border-radius:20px;
+  backdrop-filter:blur(4px);
+}
+.guia-body{padding:20px 20px 22px}
+.guia-name{
+  font-size:17px;font-weight:800;color:var(--ink);
+  letter-spacing:-.03em;margin-bottom:4px;
+}
+.guia-role{
+  font-size:12px;color:var(--g);font-weight:600;
+  letter-spacing:.04em;margin-bottom:12px;
+}
+.guia-bio{font-size:13px;color:var(--i3);line-height:1.65}
+.guia-camps{
+  display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;
+}
+.guia-camp-tag{
+  font-size:10.5px;font-weight:600;color:var(--g);
+  background:var(--gl);padding:3px 10px;border-radius:20px;
+}
+
+/* ─────────────────────────────────────────────────────
+   EMPRESAS LOGOS  (SiVola-style trust strip)
+───────────────────────────────────────────────────── */
+.logos-sec{border-top:1px solid var(--ln);border-bottom:1px solid var(--ln);padding:40px 5%}
+.logos-inner{max-width:1100px;margin:0 auto}
+.logos-label{
+  text-align:center;
+  font-size:11px;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--i4);
+  margin-bottom:28px;
+}
+.logos-row{
+  display:flex;justify-content:center;
+  align-items:center;gap:52px;flex-wrap:wrap;
+}
+.logo-company{
+  font-size:17px;font-weight:800;
+  color:var(--i4);letter-spacing:-.02em;
+  transition:color var(--t);cursor:default;
+  opacity:.55;
+}
+.logo-company:hover{color:var(--ink);opacity:1}
+
+/* ─────────────────────────────────────────────────────
+   SOLICITAR PROPOSTA
+───────────────────────────────────────────────────── */
+.contact-sec{
+  background:linear-gradient(135deg,#0f2211 0%,#192f1b 50%,#0c1a0e 100%);
+  padding:80px 5%;
+}
+.contact-inner{
+  max-width:1100px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:72px;align-items:start;
+}
+.ct-left .sec-title{color:#fff;text-align:left}
+.ct-left .sec-desc{color:rgba(255,255,255,.55);text-align:left;max-width:400px;margin:0 0 36px}
+.ct-contact-items{display:flex;flex-direction:column;gap:16px}
+.ci{display:flex;align-items:center;gap:14px}
+.ci-dot{
+  width:36px;height:36px;border-radius:8px;flex-shrink:0;
+  background:rgba(255,255,255,.08);
+  display:flex;align-items:center;justify-content:center;
+}
+.ci-dot svg{color:rgba(255,255,255,.6)}
+.ci-label{font-size:10px;font-weight:600;color:rgba(255,255,255,.35);letter-spacing:.08em;text-transform:uppercase}
+.ci-val{font-size:14px;color:rgba(255,255,255,.8);font-weight:500}
+/* Form */
+.ct-form{background:#fff;border-radius:16px;padding:36px}
+.ct-form-title{font-size:18px;font-weight:800;color:var(--ink);letter-spacing:-.03em;margin-bottom:4px}
+.ct-form-sub{font-size:13px;color:var(--i3);margin-bottom:24px}
+.fg{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.fg label{font-size:11.5px;font-weight:600;color:var(--i2)}
+.fg input,.fg select,.fg textarea{
+  border:1.5px solid var(--ln);border-radius:9px;
+  padding:10px 13px;font-size:14px;color:var(--ink);
+  background:#fff;outline:none;
+  transition:border-color var(--t);
+  width:100%;
+}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--g)}
+.fg.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fg.row>div{display:flex;flex-direction:column;gap:5px}
+.fg textarea{resize:vertical;min-height:88px}
+.fg select{
+  -webkit-appearance:none;appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236a6a66' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 12px center;
+}
+.btn-submit{
+  width:100%;margin-top:6px;
+  background:var(--g);color:#fff;
+  padding:14px;border-radius:40px;
+  font-size:14px;font-weight:800;
+  letter-spacing:.02em;
+  transition:background var(--t),transform var(--t);
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.btn-submit:hover{background:var(--gd);transform:translateY(-1px)}
+.btn-note{font-size:11.5px;color:var(--i4);text-align:center;margin-top:10px;line-height:1.5}
+
+/* ─────────────────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────────────────── */
+.footer{
+  background:#08120a;
+  padding:32px 5%;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:12px;
+}
+.footer-brand{font-size:15px;font-weight:900;color:rgba(255,255,255,.5);letter-spacing:-.03em}
+.footer-copy{font-size:12px;color:rgba(255,255,255,.3);line-height:1.5}
+.footer-links{display:flex;gap:20px}
+.footer-links a{font-size:12px;color:rgba(255,255,255,.3);transition:color var(--t)}
+.footer-links a:hover{color:rgba(255,255,255,.7)}
+
+/* ─────────────────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────────────────── */
+@media(max-width:900px){
+  .camps-grid,.camps-grid-3{grid-template-columns:1fr}
+  .sobre-grid,.contact-inner{grid-template-columns:1fr;gap:40px}
+  .guias-grid{grid-template-columns:1fr}
+  .data-row{grid-template-columns:48px 1px 1fr auto;gap:12px}
+  .data-spots{display:none}
+  .sobre-imgs{grid-template-columns:1fr}
+  .sobre-img-wrap:first-child{margin-top:0}
+  .nav-links{display:none}
+}
+@media(max-width:560px){
+  .nav{padding:0 18px}
+  .hero-content{padding:100px 18px 80px}
+  .camp-selector{flex-direction:column;padding:16px}
+  .cs-btn{width:100%;justify-content:center}
+  .stats-row{grid-template-columns:1fr 1fr;gap:16px}
+  .data-row{grid-template-columns:1fr auto}
+  .data-sep,.data-date{display:none}
+  .banner-text{padding:24px 24px}
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ────────────────────────────────────────────── -->
+<nav class="nav" id="nav">
+  <div class="nav-left">
+    <div class="nav-ham" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="nav-links">
+      <a href="#camps" class="nl">The Camps</a>
+      <a href="#sobre" class="nl">Sobre Nós</a>
+      <a href="#guias" class="nl">Os Guias</a>
+    </div>
+  </div>
+
+  <a href="#" class="nav-logo">
+    <div class="logo-mark">BOREALIS</div>
+    <div class="logo-sub">Corporate</div>
+  </a>
+
+  <div class="nav-right">
+    <a href="#contactos" class="nav-cta">Solicitar Proposta</a>
+  </div>
+</nav>
+
+<!-- ── HERO ───────────────────────────────────────────── -->
+<section class="hero" id="home">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Desde 2002 · Metodologias Proprietárias</div>
+    <h1 class="hero-h">
+      Experiências<br><em>100% de Autoria</em><br>Própria
+    </h1>
+    <p class="hero-sub">
+      Programas de Team Building desenhados por quem palmilha montanhas há duas décadas. Nada que encontres noutra agência.
+    </p>
+
+    <div class="camp-selector">
+      <span class="cs-label">Camp</span>
+      <select class="cs-select" id="campSelect">
+        <option value="">Qual programa te interessa?</option>
+        <option>Mindful Camp — Banhos de Floresta</option>
+        <option>Space Camp — Engenharia Aeroespacial</option>
+        <option>Survival Camp — Outdoor Extremo</option>
+        <option>Nature Camp — Bosque da Empresa (ESG)</option>
+        <option>Heritage Camp — Memória e Saberes</option>
+        <option>Shepherd Camp — Pastoreio Real</option>
+      </select>
+      <button class="cs-btn" onclick="scrollToContact()">Ver Programa →</button>
+    </div>
+
+    <div class="hero-trust">
+      <span class="ht">Autoria Exclusiva</span>
+      <span class="ht-sep">|</span>
+      <span class="ht">Guias Certificados</span>
+      <span class="ht-sep">|</span>
+      <span class="ht">Desde 2002</span>
+      <span class="ht-sep">|</span>
+      <span class="ht">Norte de Portugal</span>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-dot"></div>
+    <div class="scroll-dot"></div>
+    <div class="scroll-dot"></div>
+  </div>
+</section>
+
+<!-- ── BANNER DESTAQUE ────────────────────────────────── -->
+<section class="banner">
+  <div class="banner-inner">
+    <div class="banner-label">Novidade — Primavera 2026</div>
+    <div class="banner-card" onclick="scrollToContact()">
+      <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=1400&auto=format&fit=crop&q=85"
+           alt="Nature Camp" loading="lazy">
+      <div class="banner-overlay"></div>
+      <div class="banner-text">
+        <span class="banner-tag">Exclusivo ESG</span>
+        <h2 class="banner-title">Nature Camp — O Bosque da Vossa Empresa</h2>
+        <p class="banner-sub">
+          Plantação de autoria Borealis com geo-referenciação exclusiva. O legado ambiental rastreável que fica para sempre ligado à vossa equipa.
+        </p>
+        <a href="#contactos" class="btn-white" onclick="event.stopPropagation()">
+          Saber Mais
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── THE CAMPS ──────────────────────────────────────── -->
+<section class="sec" id="camps" style="background:var(--bg);padding-top:16px">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <h2 class="sec-title">Os Camps que não existem em mais lado nenhum</h2>
+      <p class="sec-desc">Seis metodologias proprietárias, desenvolvidas internamente desde 2002. Cada programa é único — e continua a sê-lo.</p>
+    </div>
+
+    <!-- Top row: 2 large cards -->
+    <div class="camps-grid">
+
+      <div class="camp-card">
+        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900&auto=format&fit=crop&q=82" alt="Mindful Camp" loading="lazy">
+        <div class="camp-card-overlay"></div>
+        <div class="camp-card-body">
+          <div class="camp-badge">Exclusivo Borealis</div>
+          <div class="camp-name">Mindful Camp</div>
+          <div class="camp-tagline">Banhos de Floresta · Técnicas de Respiração Borealis</div>
+          <div class="camp-meta">
+            <div class="camp-format">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              Meio-dia ou Dia Completo
+            </div>
+            <a href="#contactos" class="camp-cta">
+              Ver Programa
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="camp-card">
+        <img src="https://images.unsplash.com/photo-1516849841032-87cbac4d88f7?w=900&auto=format&fit=crop&q=82" alt="Space Camp" loading="lazy">
+        <div class="camp-card-overlay"></div>
+        <div class="camp-card-body">
+          <div class="camp-badge">Design Original</div>
+          <div class="camp-name">Space Camp</div>
+          <div class="camp-tagline">Engenharia Aeroespacial · Foguetes Reais · Astronomia Borealis</div>
+          <div class="camp-meta">
+            <div class="camp-format">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              Dia Completo ou Retiro
+            </div>
+            <a href="#contactos" class="camp-cta">
+              Ver Programa
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom row: 3 smaller cards -->
+    <div class="camps-grid-3">
+
+      <div class="camp-card camp-card-sm">
+        <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=700&auto=format&fit=crop&q=80" alt="Survival Camp" loading="lazy">
+        <div class="camp-card-overlay"></div>
+        <div class="camp-card-body">
+          <div class="camp-badge">Outdoor Extremo</div>
+          <div class="camp-name">Survival Camp</div>
+          <div class="camp-tagline">Fogo · Abrigos · Resiliência</div>
+          <div class="camp-meta">
+            <div class="camp-format">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              Dia Completo
+            </div>
+            <a href="#contactos" class="camp-cta">Ver →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="camp-card camp-card-sm">
+        <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=700&auto=format&fit=crop&q=80" alt="Heritage Camp" loading="lazy">
+        <div class="camp-card-overlay"></div>
+        <div class="camp-card-body">
+          <div class="camp-badge">Curadoria Borealis</div>
+          <div class="camp-name">Heritage Camp</div>
+          <div class="camp-tagline">Pão Ancestral · Azeite Artesanal · Memória</div>
+          <div class="camp-meta">
+            <div class="camp-format">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              Meio-dia ou Dia Completo
+            </div>
+            <a href="#contactos" class="camp-cta">Ver →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="camp-card camp-card-sm">
+        <img src="https://images.unsplash.com/photo-1527153818091-1a9638521e2a?w=700&auto=format&fit=crop&q=80" alt="Shepherd Camp" loading="lazy">
+        <div class="camp-card-overlay"></div>
+        <div class="camp-card-body">
+          <div class="camp-badge">Conceito Original</div>
+          <div class="camp-name">Shepherd Camp</div>
+          <div class="camp-tagline">Pastoreio Real · Apadrinhamento · Impacto Social</div>
+          <div class="camp-meta">
+            <div class="camp-format">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              Dia Completo ou Retiro
+            </div>
+            <a href="#contactos" class="camp-cta">Ver →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="sec-see-all">
+      <a href="#contactos" class="btn-outline">
+        Pedir Proposta para um Camp
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRÓXIMAS DATAS ──────────────────────────────────── -->
+<section class="sec datas" id="datas">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <h2 class="sec-title">Próximas Datas Abertas</h2>
+      <p class="sec-desc">Lugares limitados por design — cada evento é exclusivo para um grupo.</p>
+    </div>
+    <div class="datas-list">
+      <div class="data-row">
+        <div class="data-date">
+          <div class="data-day">03</div>
+          <div class="data-month">Abr</div>
+          <div class="data-dur">1 dia</div>
+        </div>
+        <div class="data-sep"></div>
+        <div>
+          <div class="data-name">Mindful Camp — Gerês</div>
+          <div class="data-sub">Banhos de Floresta + Respiração Borealis · 12–25 pessoas</div>
+        </div>
+        <div class="data-spots">4 lugares</div>
+        <a href="#contactos" class="data-cta">Ver Detalhes</a>
+      </div>
+      <div class="data-row">
+        <div class="data-date">
+          <div class="data-day">17</div>
+          <div class="data-month">Abr</div>
+          <div class="data-dur">2 dias</div>
+        </div>
+        <div class="data-sep"></div>
+        <div>
+          <div class="data-name">Survival Camp — Serra da Peneda</div>
+          <div class="data-sub">Retiro de Liderança · até 20 pessoas · Alojamento incluído</div>
+        </div>
+        <div class="data-spots">6 lugares</div>
+        <a href="#contactos" class="data-cta">Ver Detalhes</a>
+      </div>
+      <div class="data-row">
+        <div class="data-date">
+          <div class="data-day">09</div>
+          <div class="data-month">Mai</div>
+          <div class="data-dur">1 dia</div>
+        </div>
+        <div class="data-sep"></div>
+        <div>
+          <div class="data-name">Space Camp — Ponte de Lima</div>
+          <div class="data-sub">Engenharia + Foguetes · 15–30 pessoas</div>
+        </div>
+        <div class="data-spots">Aberto</div>
+        <a href="#contactos" class="data-cta">Ver Detalhes</a>
+      </div>
+      <div class="data-row">
+        <div class="data-date">
+          <div class="data-day">22</div>
+          <div class="data-month">Mai</div>
+          <div class="data-dur">1 dia</div>
+        </div>
+        <div class="data-sep"></div>
+        <div>
+          <div class="data-name">Nature Camp — Vale do Minho</div>
+          <div class="data-sub">Bosque da Empresa · ESG · geo-referenciação exclusiva</div>
+        </div>
+        <div class="data-spots">Aberto</div>
+        <a href="#contactos" class="data-cta">Ver Detalhes</a>
+      </div>
+      <div class="data-row">
+        <div class="data-date">
+          <div class="data-day">13</div>
+          <div class="data-month">Jun</div>
+          <div class="data-dur">1 dia</div>
+        </div>
+        <div class="data-sep"></div>
+        <div>
+          <div class="data-name">Heritage Camp — Vinho Verde</div>
+          <div class="data-sub">Pão Ancestral + Azeite + Vinhas · 10–20 pessoas</div>
+        </div>
+        <div class="data-spots">Aberto</div>
+        <a href="#contactos" class="data-cta">Ver Detalhes</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SOBRE ──────────────────────────────────────────── -->
+<section class="sec" id="sobre">
+  <div class="sec-inner">
+    <div class="sobre-grid">
+      <div>
+        <div class="sobre-kicker">Desde 2002</div>
+        <h2 class="sobre-h">Duas Décadas de Inovação Própria</h2>
+        <p class="sobre-p">
+          A borealis.travel não se limita a organizar eventos — cria conceitos originais. Cada programa é uma metodologia desenvolvida internamente pelos nossos guias, testada no terreno ao longo de anos, e impossível de copiar.
+        </p>
+        <div class="sobre-quote">
+          "Cada um dos nossos programas é uma metodologia proprietária, desenvolvida por guias que palmilharam o mundo, para garantir que a sua equipa vive uma experiência que não existe em mais lado nenhum."
+        </div>
+        <p class="sobre-p">
+          A exclusividade Borealis garante que o seu evento é único, autêntico e focado em resultados reais de coesão e resiliência de equipa.
+        </p>
+        <div class="stats-row">
+          <div class="stat-item">
+            <div class="stat-num">20+</div>
+            <div class="stat-lbl">Anos de Autoria</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">200+</div>
+            <div class="stat-lbl">Empresas</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">5k+</div>
+            <div class="stat-lbl">Participantes</div>
+          </div>
+        </div>
+      </div>
+      <div class="sobre-imgs">
+        <div class="sobre-img-wrap">
+          <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=700&auto=format&fit=crop&q=82" alt="Natureza Borealis" loading="lazy">
+        </div>
+        <div class="sobre-img-wrap">
+          <img src="https://images.unsplash.com/photo-1605379399642-870262d3d051?w=700&auto=format&fit=crop&q=82" alt="Equipa Borealis" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── OS GUIAS ───────────────────────────────────────── -->
+<section class="sec guias" id="guias">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <h2 class="sec-title">Os nossos guias</h2>
+      <p class="sec-desc">Uma equipa de viajantes profissionais que vivem aquilo que ensinam.</p>
+    </div>
+    <div class="guias-grid">
+      <div class="guia-card">
+        <div class="guia-photo">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&auto=format&fit=crop&q=80&facepad=2&face=1" alt="Guia" loading="lazy">
+          <div class="guia-tag">Lead Guide</div>
+        </div>
+        <div class="guia-body">
+          <div class="guia-name">Vítor Magalhães</div>
+          <div class="guia-role">Director de Experiência · Borealis desde 2002</div>
+          <div class="guia-bio">Guia de alta montanha certificado pelo IFMGA. Percorreu mais de 40 países a pé. Criador das metodologias Survival Camp e Space Camp.</div>
+          <div class="guia-camps">
+            <span class="guia-camp-tag">Survival Camp</span>
+            <span class="guia-camp-tag">Space Camp</span>
+            <span class="guia-camp-tag">Heritage Camp</span>
+          </div>
+        </div>
+      </div>
+      <div class="guia-card">
+        <div class="guia-photo">
+          <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=500&auto=format&fit=crop&q=80&facepad=2&face=1" alt="Guia" loading="lazy">
+          <div class="guia-tag">Mindfulness Guide</div>
+        </div>
+        <div class="guia-body">
+          <div class="guia-name">Inês Gaya</div>
+          <div class="guia-role">Guia de Shinrin-yoku · Especialista em Respiração</div>
+          <div class="guia-bio">Formada em psicologia e certificada em Shinrin-yoku no Japão. Criadora do protocolo de Banhos de Floresta exclusivo da Borealis.</div>
+          <div class="guia-camps">
+            <span class="guia-camp-tag">Mindful Camp</span>
+            <span class="guia-camp-tag">Nature Camp</span>
+          </div>
+        </div>
+      </div>
+      <div class="guia-card">
+        <div class="guia-photo">
+          <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=500&auto=format&fit=crop&q=80&facepad=2&face=1" alt="Guia" loading="lazy">
+          <div class="guia-tag">Rural Heritage Guide</div>
+        </div>
+        <div class="guia-body">
+          <div class="guia-name">Francisco Saraiva</div>
+          <div class="guia-role">Guia de Pastoreio · Especialista em Patrimônio Rural</div>
+          <div class="guia-bio">Agricultor por opção, guia por vocação. Criou o Shepherd Camp a partir da sua própria quinta no Vale do Minho. Autentico.</div>
+          <div class="guia-camps">
+            <span class="guia-camp-tag">Shepherd Camp</span>
+            <span class="guia-camp-tag">Heritage Camp</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── EMPRESAS ───────────────────────────────────────── -->
+<div class="logos-sec">
+  <div class="logos-inner">
+    <div class="logos-label">Empresas que Confiam no Nosso ADN</div>
+    <div class="logos-row">
+      <span class="logo-company">IKEA</span>
+      <span class="logo-company">SONAE</span>
+      <span class="logo-company">RENOVA</span>
+      <span class="logo-company">SHAMIR</span>
+      <span class="logo-company">FARFETCH</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── SOLICITAR PROPOSTA ─────────────────────────────── -->
+<section class="contact-sec" id="contactos">
+  <div class="contact-inner">
+    <div class="ct-left">
+      <h2 class="sec-title">Prontos para algo que não encontra noutra agência?</h2>
+      <p class="sec-desc">Desenvolvemos programas à medida. 100% de autoria Borealis, 100% exclusivos para a vossa empresa.</p>
+      <div class="ct-contact-items">
+        <div class="ci">
+          <div class="ci-dot">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <div class="ci-label">Email</div>
+            <div class="ci-val">ola@borealis.travel</div>
+          </div>
+        </div>
+        <div class="ci">
+          <div class="ci-dot">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.56 1.29h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.93a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <div>
+            <div class="ci-label">Linha Corporativa</div>
+            <div class="ci-val">(+351) 910 910 930</div>
+          </div>
+        </div>
+        <div class="ci">
+          <div class="ci-dot">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <div class="ci-label">Sede</div>
+            <div class="ci-val">Ponte de Lima, Portugal</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ct-form">
+      <div class="ct-form-title">Solicitar Proposta Exclusiva</div>
+      <div class="ct-form-sub">Resposta em menos de 24 horas úteis.</div>
+      <form id="propForm" onsubmit="handleProp(event)">
+        <div class="fg row">
+          <div>
+            <label>Empresa</label>
+            <input type="text" id="company" placeholder="Nome da empresa" required>
+          </div>
+          <div>
+            <label>Nº Pessoas</label>
+            <input type="number" id="people" placeholder="Estimativa" min="1">
+          </div>
+        </div>
+        <div class="fg">
+          <label>Email Corporativo</label>
+          <input type="email" id="email" placeholder="email@empresa.com" required>
+        </div>
+        <div class="fg">
+          <label>Camp de Interesse</label>
+          <select id="interest">
+            <option value="Mindful Camp">Mindful Camp (Banhos de Floresta)</option>
+            <option value="Space Camp">Space Camp (Engenharia Aeroespacial)</option>
+            <option value="Survival Camp">Survival Camp (Outdoor Extremo)</option>
+            <option value="Nature Camp">Nature Camp (ESG + Bosque)</option>
+            <option value="Heritage Camp">Heritage Camp (Memória e Saberes)</option>
+            <option value="Shepherd Camp">Shepherd Camp (Pastoreio Real)</option>
+            <option value="Vários">Vários / A definir</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Notas para Personalização</label>
+          <textarea id="message" placeholder="Objetivos da equipa, data, localização preferida…"></textarea>
+        </div>
+        <button type="submit" class="btn-submit">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          Enviar Pedido de Proposta
+        </button>
+        <p class="btn-note">O email do vosso cliente de e-mail abrirá com a proposta já redigida para a equipa Borealis.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="footer-brand">BOREALIS</div>
+  <div class="footer-copy">© 2002–2024 Borealis.travel · Design Original de Experiências de Natureza</div>
+  <div class="footer-links">
+    <a href="#">corporate.borealis.travel</a>
+    <a href="#">Privacidade</a>
+  </div>
+</footer>
+
+<script>
+/* Nav scroll */
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40)
+}, { passive: true })
+
+/* Hero bg parallax + load */
+const heroBg = document.getElementById('heroBg')
+heroBg.classList.add('loaded')
+
+/* Smooth anchor scrolls */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'))
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }) }
+  })
+})
+
+function scrollToContact() {
+  document.getElementById('contactos').scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+
+/* Form handler */
+function handleProp(e) {
+  e.preventDefault()
+  const company  = document.getElementById('company').value
+  const people   = document.getElementById('people').value || 'A definir'
+  const email    = document.getElementById('email').value
+  const interest = document.getElementById('interest').value
+  const message  = document.getElementById('message').value || 'Desejamos uma proposta personalizada.'
+
+  const subj = `PROPOSTA EXCLUSIVA: ${company} — ${interest}`
+  let body = `Olá equipa Borealis.travel,\n\n`
+  body += `Pedido de proposta para o vosso programa exclusivo de Team Building.\n\n`
+  body += `EMPRESA: ${company}\nEMAIL: ${email}\nPARTICIPANTES: ${people}\nPROGRAMA: ${interest}\n\n`
+  body += `NOTAS:\n${message}\n\nMelhores cumprimentos,\n${company}`
+
+  window.location.href = `mailto:ola@borealis.travel?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(body)}`
+}
+</script>
+</body>
+</html>

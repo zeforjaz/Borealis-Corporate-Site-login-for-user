@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Área Pessoal — Borealis on Trekking</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+/* ─── TOKENS ─── */
+:root{
+  --g900:#0f2a1a;--g700:#1a4a2e;--g500:#2d6a4f;--g300:#52b788;--g100:#d8f3dc;--g50:#f0f7f3;
+  --sand:#f7f5f0;--ink:#181815;--ink2:#3d3d3a;--ink3:#6b6b67;--ink4:#a8a8a4;--line:#e8e6e1;
+  --orange:#e85d04;--warn:#92400e;--warnbg:#fef3c7;
+  --r:8px;--r2:4px;--t:180ms ease;
+  --f-head:'DM Sans',sans-serif;--f-body:'DM Sans',sans-serif;--f-serif:'Lora',serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--f-body);font-size:14px;line-height:1.6;color:var(--ink);background:var(--sand);-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,h4{font-family:var(--f-head);line-height:1.2;letter-spacing:-0.02em;font-weight:600}
+button{font-family:inherit;cursor:pointer;border:none;background:none;transition:all var(--t)}
+input,textarea,select{font-family:inherit}
+a{color:inherit;text-decoration:none}
+svg{display:block;flex-shrink:0}
+
+/* ─── TOPBAR ─── */
+.topbar{background:var(--g900);height:34px;padding:0 28px;display:flex;align-items:center;justify-content:space-between;font-size:11px;letter-spacing:.04em;color:rgba(255,255,255,.5)}
+.tb-r{display:flex;gap:18px}.tb-r a{color:rgba(255,255,255,.5);transition:color var(--t)}.tb-r a:hover{color:#fff}
+.tb-tag{background:var(--orange);color:#fff;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:2px}
+
+/* ─── HEADER ─── */
+.header{background:#fff;border-bottom:1px solid var(--line);height:58px;padding:0 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer}
+.logo-icon{width:34px;height:34px;background:var(--g700);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.logo-text{display:flex;flex-direction:column;gap:0}
+.logo-name{font-family:var(--f-head);font-weight:700;font-size:15px;color:var(--g700);letter-spacing:-0.04em;line-height:1.1}
+.logo-sub{font-size:9px;font-weight:500;color:var(--ink4);letter-spacing:.1em;text-transform:uppercase}
+.h-nav{display:flex;gap:2px}
+.hn{height:34px;padding:0 11px;border-radius:var(--r2);font-size:13px;font-weight:500;color:var(--ink3);display:flex;align-items:center;transition:all var(--t);cursor:pointer}
+.hn:hover{color:var(--ink);background:var(--sand)}
+.h-right{display:flex;gap:8px;align-items:center}
+.icon-btn{width:34px;height:34px;border-radius:var(--r2);display:flex;align-items:center;justify-content:center;color:var(--ink3);transition:all var(--t);cursor:pointer;position:relative}
+.icon-btn:hover{background:var(--sand);color:var(--ink)}
+.notif-dot{position:absolute;top:7px;right:7px;width:6px;height:6px;background:var(--orange);border-radius:50%;border:2px solid #fff}
+.user-btn{height:34px;padding:0 14px;background:var(--g700);color:#fff;border-radius:var(--r2);font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;cursor:pointer;transition:background var(--t)}
+.user-btn:hover{background:var(--g900)}
+.avatar{width:20px;height:20px;background:rgba(255,255,255,.2);border-radius:50%;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+/* ─── LAYOUT ─── */
+.layout{display:flex;min-height:calc(100vh - 92px)}
+
+/* ─── SIDEBAR ─── */
+.sidebar{width:210px;background:#fff;border-right:1px solid var(--line);padding:20px 0;flex-shrink:0;position:sticky;top:58px;height:calc(100vh - 58px);overflow-y:auto}
+.sb-profile{padding:0 18px 18px;border-bottom:1px solid var(--line);margin-bottom:10px}
+.sb-av{width:38px;height:38px;background:var(--g700);border-radius:50%;color:#fff;font-family:var(--f-head);font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;margin-bottom:10px}
+.sb-name{font-family:var(--f-head);font-weight:600;font-size:13px;color:var(--ink)}
+.sb-sub{font-size:11px;color:var(--ink4);margin-top:1px}
+.sb-trips{display:flex;gap:12px;margin-top:10px}
+.sb-stat{display:flex;flex-direction:column;gap:1px}
+.sb-val{font-family:var(--f-head);font-weight:700;font-size:16px;color:var(--g700)}
+.sb-lbl{font-size:10px;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em}
+.sb-sec{padding:12px 18px 4px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4)}
+.sb-item{display:flex;align-items:center;gap:10px;padding:8px 18px;font-size:13px;font-weight:500;color:var(--ink3);width:100%;text-align:left;cursor:pointer;border-right:2px solid transparent;transition:all var(--t);position:relative}
+.sb-item:hover{color:var(--ink);background:var(--sand)}
+.sb-item.active{color:var(--g700);background:var(--g50);border-right-color:var(--g700);font-weight:600}
+.sb-item svg{color:var(--ink4);width:15px;height:15px;transition:color var(--t)}
+.sb-item.active svg,.sb-item:hover svg{color:var(--g500)}
+.sb-item.active svg{color:var(--g700)}
+.sb-notif{margin-left:auto;background:var(--orange);color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;padding:0 4px;border-radius:8px;display:flex;align-items:center;justify-content:center}
+
+/* ─── MAIN ─── */
+.main{flex:1;padding:28px 32px;max-width:900px}
+.page{display:none;animation:fadeUp .2s ease}
+.page.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.ph{margin-bottom:22px}
+.ph h1{font-size:22px;font-weight:700;color:var(--ink);margin-bottom:3px}
+.ph p{font-size:13px;color:var(--ink3)}
+
+/* ─── COMPONENTS ─── */
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:20px;margin-bottom:14px}
+.card-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.card-title{font-family:var(--f-head);font-size:14px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:7px}
+.btn{height:34px;padding:0 14px;border-radius:var(--r2);font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:6px;letter-spacing:-.01em;cursor:pointer;transition:all var(--t)}
+.btn-p{background:var(--g700);color:#fff;border:none}.btn-p:hover{background:var(--g900)}
+.btn-o{background:var(--orange);color:#fff;border:none}.btn-o:hover{background:#c94e00}
+.btn-g{color:var(--ink3);border:1px solid var(--line);background:#fff}.btn-g:hover{color:var(--ink);border-color:var(--ink3)}
+.btn-link{color:var(--g700);font-size:13px;font-weight:600;padding:0;height:auto;border:none;background:none}.btn-link:hover{color:var(--g900)}
+.btn-sm{height:28px;padding:0 10px;font-size:12px}
+.pill{height:20px;padding:0 7px;border-radius:2px;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;display:inline-flex;align-items:center}
+.pill-g{background:var(--g50);color:var(--g700)}
+.pill-o{background:var(--warnbg);color:var(--warn)}
+.pill-gray{background:var(--sand);color:var(--ink4);border:1px solid var(--line)}
+.pbar{height:3px;background:var(--line);border-radius:2px;overflow:hidden}
+.pfill{height:100%;border-radius:2px;transition:width .5s ease}
+.pf-g{background:var(--g500)}.pf-o{background:var(--orange)}
+.alert{padding:11px 14px;border-radius:var(--r2);font-size:13px;display:flex;gap:10px;align-items:flex-start;line-height:1.5;margin-bottom:14px}
+.al-g{background:var(--g50);border-left:3px solid var(--g500);color:var(--ink2)}
+.al-o{background:var(--warnbg);border-left:3px solid var(--orange);color:var(--warn)}
+.alert svg{flex-shrink:0;margin-top:1px;width:14px;height:14px}
+.divider{height:1px;background:var(--line);margin:14px 0}
+.row{display:flex;align-items:center}.row-b{display:flex;align-items:center;justify-content:space-between}
+.gap-2{gap:8px}.gap-3{gap:12px}.mt-2{margin-top:8px}.mt-3{margin-top:12px}.mt-4{margin-top:16px}.mb-3{margin-bottom:12px}.mb-4{margin-bottom:16px}
+.muted{color:var(--ink4);font-size:12px}
+.fw6{font-weight:600}.t-g{color:var(--g700)}.t-o{color:var(--orange)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.ic{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.ic16{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+
+/* ─── NOTIFICATION PANEL ─── */
+.notif-panel{position:fixed;top:68px;right:20px;width:340px;background:#fff;border:1px solid var(--line);border-radius:var(--r);box-shadow:0 8px 40px rgba(0,0,0,.1);z-index:500;display:none}
+.notif-panel.open{display:block;animation:fadeUp .15s ease}
+.np-head{padding:14px 18px 10px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.np-title{font-family:var(--f-head);font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px}
+.np-count{background:var(--orange);color:#fff;font-size:9px;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.np-close{width:26px;height:26px;border-radius:var(--r2);display:flex;align-items:center;justify-content:center;color:var(--ink4);cursor:pointer;transition:all var(--t)}
+.np-close:hover{background:var(--sand);color:var(--ink)}
+.np-item{padding:12px 18px;border-bottom:1px solid var(--sand);display:flex;gap:10px;cursor:pointer;transition:background var(--t)}
+.np-item:hover{background:var(--sand)}
+.np-item.unread{background:var(--g50)}
+.np-item.unread:hover{background:#e6f2eb}
+.np-ico{width:30px;height:30px;border-radius:var(--r2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.np-ico-g{background:var(--g50);color:var(--g700)}
+.np-ico-o{background:var(--warnbg);color:var(--warn)}
+.np-ico-n{background:var(--sand);color:var(--ink3)}
+.np-t{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:2px}
+.np-b{font-size:12px;color:var(--ink3);line-height:1.4}
+.np-time{font-size:11px;color:var(--ink4);margin-top:2px}
+.np-dot{width:5px;height:5px;background:var(--orange);border-radius:50%;margin-top:7px;flex-shrink:0}
+
+<style>
+
+/* ─── DASHBOARD ─── */
+.trip-hero{background:var(--g700);border-radius:var(--r);padding:22px 24px;color:#fff;margin-bottom:14px;position:relative;overflow:hidden}
+.trip-hero::before{content:'';position:absolute;right:-40px;top:-40px;width:220px;height:220px;background:rgba(255,255,255,.04);border-radius:50%}
+.trip-hero::after{content:'';position:absolute;bottom:-20px;right:40px;width:120px;height:120px;background:rgba(255,255,255,.03);border-radius:50%}
+.th-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.55;margin-bottom:6px}
+.th-title{font-family:var(--f-head);font-size:20px;font-weight:700;letter-spacing:-.03em;margin-bottom:3px;position:relative;z-index:1}
+.th-sub{font-size:13px;opacity:.65;margin-bottom:18px;position:relative;z-index:1}
+.th-meta{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:18px;position:relative;z-index:1}
+.th-m{display:flex;align-items:center;gap:5px;font-size:12px;opacity:.8}
+.th-acts{display:flex;gap:8px;flex-wrap:wrap;position:relative;z-index:1}
+.th-btn-p{height:34px;padding:0 16px;background:#fff;color:var(--g700);border-radius:var(--r2);font-size:13px;font-weight:700;display:inline-flex;align-items:center;gap:6px;cursor:pointer;transition:opacity var(--t)}.th-btn-p:hover{opacity:.9}
+.th-btn-s{height:34px;padding:0 14px;background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:var(--r2);font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:6px;cursor:pointer;transition:all var(--t)}.th-btn-s:hover{background:rgba(255,255,255,.18)}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+.stat-card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:4px;transition:border-color var(--t);cursor:default}
+.stat-card:hover{border-color:var(--g300)}
+.stat-val{font-family:var(--f-head);font-size:22px;font-weight:700;color:var(--g700);letter-spacing:-.03em}
+.stat-lbl{font-size:11px;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em}
+.stat-sub{font-size:12px;color:var(--ink3);margin-top:2px}
+.checklist-mini{display:flex;flex-direction:column;gap:6px}
+.cl-row{display:flex;align-items:center;justify-content:space-between;font-size:13px}
+.cl-l{display:flex;align-items:center;gap:8px;color:var(--ink2)}
+.cl-done{color:var(--ink4);text-decoration:line-through}
+.check-circle{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--line);flex-shrink:0;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all var(--t)}
+.check-circle.checked{background:var(--g500);border-color:var(--g500)}
+.check-circle.checked svg{display:block}
+.check-circle svg{display:none;width:9px;height:9px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+
+/* ─── TRIPS ─── */
+.trip-list{display:flex;flex-direction:column;gap:10px}
+.trip-card{background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:all var(--t);display:flex}
+.trip-card:hover{border-color:var(--g300);box-shadow:0 2px 12px rgba(26,74,46,.08)}
+.tc-stripe{width:4px;flex-shrink:0}
+.tc-s-active{background:var(--g500)}
+.tc-s-past{background:var(--line)}
+.tc-s-future{background:var(--orange)}
+.tc-body{flex:1;padding:14px 16px;display:flex;align-items:center;gap:12px}
+.tc-thumb{width:52px;height:52px;border-radius:var(--r2);background:var(--g100);flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:20px}
+.tc-info{flex:1;min-width:0}
+.tc-name{font-family:var(--f-head);font-size:14px;font-weight:600;color:var(--ink);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tc-date{font-size:12px;color:var(--ink3);margin-bottom:4px}
+.tc-tags{display:flex;gap:4px;flex-wrap:wrap}
+.tc-right{flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.tc-price{font-family:var(--f-head);font-size:13px;font-weight:600;color:var(--ink)}
+.tc-arrow{color:var(--ink4)}
+
+/* ─── CHECKLIST PAGE ─── */
+.cl-cats{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.cl-cat-btn{height:28px;padding:0 12px;border-radius:14px;font-size:12px;font-weight:600;border:1.5px solid var(--line);color:var(--ink3);cursor:pointer;transition:all var(--t)}
+.cl-cat-btn:hover{border-color:var(--g300);color:var(--g700)}
+.cl-cat-btn.active{background:var(--g700);color:#fff;border-color:var(--g700)}
+.checklist-group{margin-bottom:14px}
+.clg-title{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);padding:10px 0 6px}
+.cli{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:var(--r2);cursor:pointer;transition:background var(--t);border-bottom:1px solid var(--sand)}
+.cli:hover{background:var(--sand)}
+.cli-check{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--line);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all var(--t)}
+.cli-check.on{background:var(--g500);border-color:var(--g500)}
+.cli-check.on svg{display:block}
+.cli-check svg{display:none;width:10px;height:10px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.cli-body{flex:1;min-width:0}
+.cli-name{font-size:13px;font-weight:500;color:var(--ink);transition:color var(--t)}
+.cli-name.done{color:var(--ink4);text-decoration:line-through}
+.cli-note{font-size:11px;color:var(--ink4);margin-top:1px}
+.cli-tag{height:16px;padding:0 6px;border-radius:2px;font-size:9px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-left:auto;flex-shrink:0;display:flex;align-items:center}
+.ct-ess{background:var(--g50);color:var(--g700)}
+.ct-opt{background:var(--sand);color:var(--ink4)}
+.ct-food{background:#fef9ec;color:#92600a}
+
+/* ─── PAYMENTS ─── */
+.pay-trip{margin-bottom:18px}
+.pt-head{font-family:var(--f-head);font-size:14px;font-weight:600;color:var(--ink);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
+.pay-phases{display:flex;flex-direction:column;gap:6px}
+.pay-phase{background:#fff;border:1px solid var(--line);border-radius:var(--r2);padding:12px 14px;display:flex;align-items:center;gap:12px;transition:all var(--t)}
+.pay-phase.urgent{border-color:var(--orange);background:#fff9f5}
+.pay-phase.paid{opacity:.7}
+.pp-status{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.pps-paid{background:var(--g50);color:var(--g500)}
+.pps-urgent{background:var(--warnbg);color:var(--orange)}
+.pps-future{background:var(--sand);color:var(--ink4)}
+.pp-info{flex:1;min-width:0}
+.pp-name{font-size:13px;font-weight:600;color:var(--ink)}
+.pp-date{font-size:12px;color:var(--ink3);margin-top:1px}
+.pp-amount{font-family:var(--f-head);font-size:15px;font-weight:700;color:var(--ink);flex-shrink:0}
+.pp-amount.paid{color:var(--g500)}.pp-amount.urgent{color:var(--orange)}
+
+/* ─── FEEDBACK ─── */
+.fb-list{display:flex;flex-direction:column;gap:10px}
+.fb-card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.fb-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px}
+.fb-trip{font-family:var(--f-head);font-size:14px;font-weight:600;color:var(--ink)}
+.fb-date{font-size:12px;color:var(--ink4);margin-top:2px}
+.fb-blocked{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink4);font-style:italic}
+.stars{display:flex;gap:4px;margin-bottom:10px;cursor:pointer}
+.star{width:24px;height:24px;color:var(--line);transition:all var(--t)}
+.star.lit{color:#f59e0b}
+.star:hover~.star{color:var(--line)}
+.stars:hover .star{color:#f59e0b}
+.fb-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.fb-tag{height:24px;padding:0 10px;border-radius:12px;font-size:11px;font-weight:500;border:1.5px solid var(--line);color:var(--ink3);cursor:pointer;transition:all var(--t)}
+.fb-tag:hover{border-color:var(--g300);color:var(--g700)}
+.fb-tag.sel{background:var(--g700);color:#fff;border-color:var(--g700)}
+.fb-textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:var(--r2);font-size:13px;resize:vertical;min-height:72px;color:var(--ink);outline:none;transition:border-color var(--t)}
+.fb-textarea:focus{border-color:var(--g300)}
+.fb-sent{background:var(--g50);border-radius:var(--r2);padding:12px 14px;font-size:13px;color:var(--ink2)}
+.fb-rating{display:flex;gap:3px;margin-bottom:6px}
+.fb-star{width:14px;height:14px;color:#f59e0b}
+
+/* ─── CHAT ─── */
+/* support — contact cards only */
+.msg{display:flex;gap:8px;max-width:88%}
+
+
+/* ─── NINER ─── */
+.niner-card{background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-bottom:14px}
+.niner-head{background:var(--g900);padding:18px 20px;display:flex;align-items:center;gap:14px}
+.niner-av{width:48px;height:48px;background:rgba(255,255,255,.15);border-radius:50%;border:2px solid rgba(255,255,255,.3);color:#fff;font-family:var(--f-head);font-weight:700;font-size:17px;display:flex;align-items:center;justify-content:center}
+.niner-name{font-family:var(--f-head);font-size:16px;font-weight:700;color:#fff;margin-bottom:2px}
+.niner-role{font-size:12px;color:rgba(255,255,255,.55)}
+.niner-body{padding:18px 20px}
+.niner-msg{font-family:var(--f-serif);font-style:italic;font-size:14px;color:var(--ink2);line-height:1.7;border-left:3px solid var(--g100);padding-left:12px;margin-bottom:14px}
+.niner-sig{font-size:12px;color:var(--ink4);margin-top:-6px;padding-left:12px}
+.niner-hist{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.nh-item{padding:10px 12px;background:var(--sand);border-radius:var(--r2);font-size:12px;color:var(--ink3)}
+.nh-date{font-size:10px;color:var(--ink4);margin-bottom:3px;text-transform:uppercase;letter-spacing:.06em}
+
+/* ─── MAP ─── */
+.map-wrap{background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-bottom:14px}
+.map-svg-wrap{border-bottom:1px solid var(--line);background:#f5f0e8;overflow:hidden;cursor:default}
+.meet-points{display:flex;flex-direction:column;gap:8px;padding:16px}
+.mp-card{background:var(--sand);border-radius:var(--r2);padding:12px 14px;border:1.5px solid var(--line);transition:all var(--t);cursor:pointer}
+.mp-card:hover{border-color:var(--g300)}
+.mp-card.sel{border-color:var(--g700);background:var(--g50)}
+.mp-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.mp-label{font-family:var(--f-head);font-size:13px;font-weight:600;color:var(--ink)}
+.mp-loc{font-size:12px;color:var(--ink3);margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.mp-parts{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.mp-av{width:22px;height:22px;border-radius:50%;background:var(--g700);color:#fff;font-size:8px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.mp-av-ring{border:2px solid var(--g700)}
+.mp-count{font-size:12px;color:var(--ink3)}
+.ride-btns{display:flex;gap:6px;margin-top:8px}
+.ride-btn{height:26px;padding:0 10px;border-radius:var(--r2);font-size:11px;font-weight:600;border:1.5px solid var(--line);color:var(--ink3);cursor:pointer;transition:all var(--t)}
+.ride-btn:hover{border-color:var(--g300);color:var(--g700)}
+.ride-btn.sel-offer{background:var(--g700);color:#fff;border-color:var(--g700)}
+.ride-btn.sel-need{background:var(--warnbg);color:var(--warn);border-color:var(--orange)}
+
+/* ─── RELATÓRIO ─── */
+.report-hero{background:var(--g900);border-radius:var(--r);padding:22px 24px;color:#fff;margin-bottom:14px;position:relative;overflow:hidden}
+.rep-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+.rep-stat{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:14px;text-align:center}
+.rs-val{font-family:var(--f-head);font-size:20px;font-weight:700;color:var(--g700);letter-spacing:-.02em}
+.rs-lbl{font-size:10px;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+.altitude-svg{display:block;width:100%;height:80px;overflow:visible}
+.photo-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px;margin-bottom:14px}
+.photo-grid .ph0{grid-row:1/3;height:160px;background:var(--g100);border-radius:var(--r2);display:flex;align-items:center;justify-content:center;font-size:28px;color:var(--g300);overflow:hidden}
+.photo-grid .ph1,.photo-grid .ph2,.photo-grid .ph3,.photo-grid .ph4{height:76px;background:var(--sand);border-radius:var(--r2);display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--ink4);overflow:hidden}
+.share-card{background:var(--g900);border-radius:var(--r);padding:18px 20px;color:#fff;margin-bottom:14px}
+.sc-data{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.sc-d{display:flex;flex-direction:column;gap:2px}
+.sc-v{font-family:var(--f-head);font-size:16px;font-weight:700;color:#fff}
+.sc-l{font-size:10px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.06em}
+.share-btns{display:flex;gap:8px}
+.sb-ig{background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff;border:none}
+.sb-fb{background:#1877f2;color:#fff;border:none}
+.sb-dl{background:var(--g700);color:#fff;border:none}
+
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <span>borealis.travel</span>
+  <div class="tb-r">
+    <a href="#">Próximas Viagens</a>
+    <a href="#">Apoio</a>
+    <span class="tb-tag">Área Pessoal</span>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="logo" onclick="showPage('dashboard')">
+    <div class="logo-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 17l4-8 5 6 3-4 6 6"/>
+        <path d="M3 17h18"/>
+      </svg>
+    </div>
+    <div class="logo-text">
+      <span class="logo-name">Borealis</span>
+      <span class="logo-sub">on Trekking</span>
+    </div>
+  </div>
+  <nav class="h-nav">
+    <span class="hn" onclick="showPage('viagens')">Viagens</span>
+    <span class="hn" onclick="showPage('checklist')">Checklist</span>
+    <span class="hn" onclick="showPage('pagamentos')">Pagamentos</span>
+  </nav>
+  <div class="h-right">
+    <div class="icon-btn" onclick="toggleNotif()" id="notifBtn">
+      <svg class="ic16" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <span class="notif-dot"></span>
+    </div>
+    <div class="user-btn">
+      <div class="avatar">ZF</div>
+      Zé Forjaz
+    </div>
+  </div>
+</div>
+
+<!-- NOTIF PANEL -->
+<div class="notif-panel" id="notifPanel">
+  <div class="np-head">
+    <div class="np-title">Notificações <span class="np-count">3</span></div>
+    <div class="np-close" onclick="toggleNotif()">
+      <svg class="ic" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </div>
+  </div>
+  <div class="np-item unread" onclick="showPage('pagamentos');toggleNotif()">
+    <div class="np-ico np-ico-o">
+      <svg class="ic" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+    </div>
+    <div style="flex:1">
+      <div class="np-t">Pagamento urgente</div>
+      <div class="np-b">Islândia 2026 — €720 em 5 dias</div>
+      <div class="np-time">há 2 horas</div>
+    </div>
+    <div class="np-dot"></div>
+  </div>
+  <div class="np-item unread" onclick="showPage('niner');toggleNotif()">
+    <div class="np-ico np-ico-g">
+      <svg class="ic" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    </div>
+    <div style="flex:1">
+      <div class="np-t">Mensagem do Hugo</div>
+      <div class="np-b">Nova mensagem sobre Picos da Europa</div>
+      <div class="np-time">há 4 horas</div>
+    </div>
+    <div class="np-dot"></div>
+  </div>
+  <div class="np-item unread" onclick="showPage('pontos');toggleNotif()">
+    <div class="np-ico np-ico-g">
+      <svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 14 8 14s8-8.75 8-14a8 8 0 0 0-8-8z"/></svg>
+    </div>
+    <div style="flex:1">
+      <div class="np-t">Boleia disponível</div>
+      <div class="np-b">Ricardo oferece lugar Lisboa → Cangas</div>
+      <div class="np-time">há 1 dia</div>
+    </div>
+    <div class="np-dot"></div>
+  </div>
+  <div class="np-item" onclick="showPage('feedback');toggleNotif()">
+    <div class="np-ico np-ico-n">
+      <svg class="ic" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+    </div>
+    <div style="flex:1">
+      <div class="np-t">Feedback pendente</div>
+      <div class="np-b">Caminho de Santiago — Etapa 5</div>
+      <div class="np-time">há 3 dias</div>
+    </div>
+  </div>
+  <div class="np-item" onclick="showPage('checklist');toggleNotif()">
+    <div class="np-ico np-ico-n">
+      <svg class="ic" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+    </div>
+    <div style="flex:1">
+      <div class="np-t">Checklist actualizada</div>
+      <div class="np-b">4 novos itens para Picos da Europa</div>
+      <div class="np-time">há 5 dias</div>
+    </div>
+  </div>
+</div>
+
+<!-- LAYOUT -->
+<div class="layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sb-profile">
+      <div class="sb-av">ZF</div>
+      <div class="sb-name">Zé Forjaz</div>
+      <div class="sb-sub">Membro desde 2018</div>
+      <div class="sb-trips">
+        <div class="sb-stat"><span class="sb-val">11</span><span class="sb-lbl">Viagens</span></div>
+        <div class="sb-stat"><span class="sb-val">847km</span><span class="sb-lbl">Trilhados</span></div>
+      </div>
+    </div>
+    <div class="sb-sec">Viagem activa</div>
+    <button class="sb-item active" onclick="showPage('dashboard')">
+      <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      Resumo
+    </button>
+    <button class="sb-item" onclick="showPage('checklist')">
+      <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      Checklist
+      <span class="sb-notif">7</span>
+    </button>
+    <button class="sb-item" onclick="showPage('pontos')">
+      <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 14 8 14s8-8.75 8-14a8 8 0 0 0-8-8z"/></svg>
+      Pontos de Encontro
+    </button>
+    <button class="sb-item" onclick="showPage('niner')">
+      <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      O Meu Niner
+      <span class="sb-notif" style="background:var(--g500)">1</span>
+    </button>
+    <div class="sb-sec">Histórico</div>
+    <button class="sb-item" onclick="showPage('viagens')">
+      <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l4-8 5 6 3-4 6 6"/></svg>
+      As Minhas Viagens
+    </button>
+    <button class="sb-item" onclick="showPage('feedback')">
+      <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      Feedback
+    </button>
+    <button class="sb-item" onclick="showPage('relatorio')">
+      <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      Relatório de Viagem
+    </button>
+    <div class="sb-sec">Conta</div>
+    <button class="sb-item" onclick="showPage('pagamentos')">
+      <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+      Pagamentos
+      <span class="sb-notif">1</span>
+    </button>
+    <button class="sb-item" onclick="showPage('suporte')">
+      <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Suporte Directo
+    </button>
+  </aside>
+
+  <main class="main">
+
+<!-- ═══════════════ DASHBOARD ═══════════════ -->
+<div class="page active" id="pg-dashboard">
+  <div class="ph"><h1>Bom dia, Zé</h1><p>Tens 1 pagamento urgente e a tua próxima viagem é em 11 dias.</p></div>
+
+  <div class="alert al-o">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    <span><strong>Pagamento urgente:</strong> Islândia 2026 — €720 vence em 5 dias. <button class="btn-link" onclick="showPage('pagamentos')">Pagar agora →</button></span>
+  </div>
+
+  <div class="trip-hero">
+    <div class="th-label">Próxima viagem — em 11 dias</div>
+    <div class="th-title">Picos da Europa</div>
+    <div class="th-sub">Espanha · 20–23 Mar 2026</div>
+    <div class="th-meta">
+      <div class="th-m">
+        <svg class="ic" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        14 participantes
+      </div>
+      <div class="th-m">
+        <svg class="ic" viewBox="0 0 24 24"><path d="M3 17l4-8 5 6 3-4 6 6"/></svg>
+        3 etapas · 62km
+      </div>
+      <div class="th-m">
+        <svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Partida: 20 Mar às 7h30
+      </div>
+    </div>
+    <div class="th-acts">
+      <button class="th-btn-p" onclick="showPage('checklist')">Ver Checklist</button>
+      <button class="th-btn-s" onclick="showPage('pontos')">Ponto de Encontro</button>
+      <button class="th-btn-s" onclick="showPage('suporte')">Falar com o Hugo</button>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-val">11</div>
+      <div class="stat-lbl">Viagens realizadas</div>
+      <div class="stat-sub">+2 este ano</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val">847</div>
+      <div class="stat-lbl">km trilhados</div>
+      <div class="stat-sub">média 77km/viagem</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val">€516</div>
+      <div class="stat-lbl">Pagamento pendente</div>
+      <div class="stat-sub" style="color:var(--orange);font-weight:600">Vence 25 Mar</div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-hd">
+        <div class="card-title">
+          <svg class="ic16" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          Checklist Picos
+        </div>
+        <button class="btn-link" onclick="showPage('checklist')">Ver tudo</button>
+      </div>
+      <div style="margin-bottom:10px">
+        <div class="row-b mb-3"><span style="font-size:12px;color:var(--ink3)">8 de 15 itens</span><span style="font-size:12px;font-weight:600;color:var(--g700)">53%</span></div>
+        <div class="pbar"><div class="pfill pf-g" style="width:53%"></div></div>
+      </div>
+      <div class="checklist-mini">
+        <div class="cl-row"><div class="cl-l"><div class="check-circle checked" onclick="toggleCheck(this)"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></div><span>Botas de trekking</span></div><span class="muted">✓</span></div>
+        <div class="cl-row"><div class="cl-l"><div class="check-circle checked" onclick="toggleCheck(this)"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></div><span>Mochila 40–50L</span></div><span class="muted">✓</span></div>
+        <div class="cl-row"><div class="cl-l"><div class="check-circle" onclick="toggleCheck(this)"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></div><span style="color:var(--ink)">Kit primeiros socorros</span></div><span class="muted" style="color:var(--orange)">—</span></div>
+        <div class="cl-row"><div class="cl-l"><div class="check-circle" onclick="toggleCheck(this)"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></div><span style="color:var(--ink)">Garrafa 1.5L</span></div><span class="muted" style="color:var(--orange)">—</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-hd">
+        <div class="card-title">
+          <svg class="ic16" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Mensagem do Hugo
+        </div>
+      </div>
+      <div style="font-family:var(--f-serif);font-style:italic;font-size:13px;color:var(--ink2);line-height:1.7;border-left:3px solid var(--g100);padding-left:10px;margin-bottom:12px">
+        "A semana que aí vem vai ter condições perfeitas nos Picos. Nevoeiro de manhã cedo mas limpamos para sol total após o almoço. Tragam camadas intermédias."
+      </div>
+      <div style="font-size:11px;color:var(--ink4);padding-left:10px;margin-bottom:12px">— Hugo Palma · há 4 horas</div>
+      <button class="btn btn-g btn-sm" onclick="showPage('suporte')">
+        <svg class="ic" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Responder
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ VIAGENS ═══════════════ -->
+<div class="page" id="pg-viagens">
+  <div class="ph"><h1>As Minhas Viagens</h1><p>11 viagens realizadas, 1 activa, 1 reservada.</p></div>
+  <div class="trip-list">
+    <div class="trip-card" onclick="showPage('relatorio')">
+      <div class="tc-stripe tc-s-future"></div>
+      <div class="tc-body">
+        <div class="tc-thumb">🏔</div>
+        <div class="tc-info">
+          <div class="tc-name">Islândia — Laugavegur Trail</div>
+          <div class="tc-date">Jul 2026 · 7 noites · 9 participantes</div>
+          <div class="tc-tags"><span class="pill pill-o">Reservada</span></div>
+        </div>
+        <div class="tc-right">
+          <div class="tc-price">€1.890</div>
+          <svg class="tc-arrow ic" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="trip-card" style="border-color:var(--g300)" onclick="">
+      <div class="tc-stripe tc-s-active"></div>
+      <div class="tc-body">
+        <div class="tc-thumb">⛰</div>
+        <div class="tc-info">
+          <div class="tc-name">Picos da Europa</div>
+          <div class="tc-date">20–23 Mar 2026 · 3 etapas · 62km · 14 participantes</div>
+          <div class="tc-tags"><span class="pill pill-g">Activa — em 11 dias</span></div>
+        </div>
+        <div class="tc-right">
+          <div class="tc-price">€480</div>
+          <svg class="tc-arrow ic" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="trip-card" onclick="showPage('relatorio')">
+      <div class="tc-stripe tc-s-past"></div>
+      <div class="tc-body">
+        <div class="tc-thumb">🚶</div>
+        <div class="tc-info">
+          <div class="tc-name">Caminho de Santiago — Etapa 5</div>
+          <div class="tc-date">Fev 2026 · 27km · ↑1.320m · 8h42m</div>
+          <div class="tc-tags"><span class="pill pill-gray">Concluída</span></div>
+        </div>
+        <div class="tc-right">
+          <div class="tc-price">€320</div>
+          <svg class="tc-arrow ic" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="trip-card">
+      <div class="tc-stripe tc-s-past"></div>
+      <div class="tc-body">
+        <div class="tc-thumb">🏔</div>
+        <div class="tc-info">
+          <div class="tc-name">Dolomitas — Grande Traversata</div>
+          <div class="tc-date">Ago 2025 · 6 dias · 87km · ↑4.200m</div>
+          <div class="tc-tags"><span class="pill pill-gray">Concluída</span></div>
+        </div>
+        <div class="tc-right">
+          <div class="tc-price">€1.240</div>
+          <svg class="tc-arrow ic" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="trip-card">
+      <div class="tc-stripe tc-s-past"></div>
+      <div class="tc-body">
+        <div class="tc-thumb">🌊</div>
+        <div class="tc-info">
+          <div class="tc-name">Costa Vicentina — Rota Vicentina</div>
+          <div class="tc-date">Abr 2025 · 4 dias · 72km</div>
+          <div class="tc-tags"><span class="pill pill-gray">Concluída</span></div>
+        </div>
+        <div class="tc-right">
+          <div class="tc-price">€560</div>
+          <svg class="tc-arrow ic" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ CHECKLIST ═══════════════ -->
+<div class="page" id="pg-checklist">
+  <div class="ph"><h1>Checklist — Picos da Europa</h1><p>20–23 Mar 2026 · Actualizada pelo Hugo há 5 dias.</p></div>
+  <div class="alert al-g">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+    <span><strong>Dica do Hugo:</strong> As temperaturas nos Picos podem cair 10°C após o pôr do sol. Não se esqueçam de uma camada de lã merino e um impermeável compacto.</span>
+  </div>
+  <div class="card">
+    <div class="card-hd">
+      <div style="font-size:13px;color:var(--ink3)">8 de 15 itens</div>
+      <div style="font-size:13px;font-weight:700;color:var(--g700)">53%</div>
+    </div>
+    <div class="pbar"><div class="pfill pf-g" id="cl-progress" style="width:53%"></div></div>
+  </div>
+  <div class="cl-cats">
+    <button class="cl-cat-btn active" onclick="filterCat(this,'all')">Todos</button>
+    <button class="cl-cat-btn" onclick="filterCat(this,'Calçado')">Calçado</button>
+    <button class="cl-cat-btn" onclick="filterCat(this,'Vestuário')">Vestuário</button>
+    <button class="cl-cat-btn" onclick="filterCat(this,'Equipamento')">Equipamento</button>
+    <button class="cl-cat-btn" onclick="filterCat(this,'Alimentação')">Alimentação</button>
+    <button class="cl-cat-btn" onclick="filterCat(this,'Saúde')">Saúde</button>
+  </div>
+  <div id="checklist-container">
+    <div class="checklist-group" data-cat="Calçado">
+      <div class="clg-title">Calçado</div>
+      <div class="cli" onclick="toggleCLI(this)">
+        <div class="cli-check on"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></div>
+        <div class="cli-body"><div class="cli-name done">Botas de trekking impermeáveis</div><div class="cli-note">Gore-Tex, tornozelo alto recomendado</div></div>
+        <span class="cli-tag ct-ess">Essencial</span>
+      </div>
+      <div class="cli" onclick="toggleCLI(this)">
+        <div class="cli-check on"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></div>
+        <div class="cli-body"><div class="cli-name done">Meias de lã (3 pares)</div><div class="cli-note">Evitar algodão</div></div>
+        <span class="cli-tag ct-ess">Essencial</span>
+      </div>
+      <div class="cli" onclick="toggleCLI(this)">
+        <div class="cli-check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></div>
+        <div class="cli-body"><div class="cli-name">Sandálias de acampamento</div><div class="cli-note">Para o refúgio ao fim do dia</div></div>
+        <span class="cli-tag ct-opt">Opcional</span>
+      </div>
+    </div>
+    <div class="checklist-group" data-cat="Vestuário">
+      <div class="clg-title">Vestuário</div>
+      <div class="cli" onclick="toggleCLI(this)">
+        <div class="cli-check on"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></div>
+        <div class="cli-body"><div class="cli-name done">Impermeável compacto</div><div class="cli-note">< 400g, com capuz</div></div>
+        <span class="cli-tag ct-ess">Essencial</span>
+      </div>
+      <div class="cli" onclick="toggleCLI(this)">
+        <div class="cli-check on"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></div>
+        <div class="cli-body"><div class="cli-name done">Camada intermédia (fleece ou lã)</div><div class="cli-note">Noites podem ser frias</div></div>
+        <span class="cli-tag ct-ess">Essencial</span>
+      </div>
+      <div class="cli" onclick="toggleCLI(this)">
+        <div class="cli-check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></div>
+        <div class="cli-body"><div class="cli-name">Calças de trekking</div><div class="cli-note">2 pares recomendados</div></div>
+        <span class="cli-tag ct-ess">Essencial</span>
+      </div>
+      <div class="cli" onclick="toggleCLI(this)">
+        <div class="cli-check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></div>
+        <div class="cli-body"><div class="cli-name">Luvas e gorro</div><div class="cli-note">Para manhãs frias nos picos</div></div>
+        <span class="cli-tag ct-ess">Essencial</span>
+      </div>
+    </div>
+    <div class="checklist-group" data-cat="Equipamento">
+      <div class="clg-title">Equipamento</div>
+      <div class="cli" onclick="toggleCLI(this)">
+        <div class="cli-check on"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></div>
+        <div class="cli-body"><div class="cli-name done">Mochila 40–50L</div></div>
+        <span class="cli-tag ct-ess">Essencial</span>
+      </div>
+      <div class="cli" onclick="toggleCLI(this)">
+        <div class="cli-check on"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></div>
+        <div class="cli-body"><div class="cli-name done">Bastões de trekking</div></div>
+        <span class="cli-tag ct-ess">Essencial</span>
+      </div>
+      <div class="cli" onclick="toggleCLI(this)">
+        <div class="cli-check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></div>
+        <div class="cli-body"><div class="cli-name">Lanterna frontal + pilhas extra</div></div>
+        <span class="cli-tag ct-ess">Essencial</span>
+      </div>
+    </div>
+    <div class="checklist-group" data-cat="Alimentação">
+      <div class="clg-title">Alimentação</div>
+      <div class="cli" onclick="toggleCLI(this)">
+        <div class="cli-check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></div>
+        <div class="cli-body"><div class="cli-name">Garrafa 1.5L ou camelbak</div></div>
+        <span class="cli-tag ct-food">Alimentação</span>
+      </div>
+      <div class="cli" onclick="toggleCLI(this)">
+        <div class="cli-check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></div>
+        <div class="cli-body"><div class="cli-name">Snacks de energia (barras, frutos secos)</div><div class="cli-note">Para 3 dias — o Hugo fornece almoços</div></div>
+        <span class="cli-tag ct-food">Alimentação</span>
+      </div>
+    </div>
+    <div class="checklist-group" data-cat="Saúde">
+      <div class="clg-title">Saúde</div>
+      <div class="cli" onclick="toggleCLI(this)">
+        <div class="cli-check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></div>
+        <div class="cli-body"><div class="cli-name">Kit primeiros socorros</div></div>
+        <span class="cli-tag ct-ess">Essencial</span>
+      </div>
+      <div class="cli" onclick="toggleCLI(this)">
+        <div class="cli-check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></div>
+        <div class="cli-body"><div class="cli-name">Protetor solar SPF50+</div></div>
+        <span class="cli-tag ct-ess">Essencial</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ PAGAMENTOS ═══════════════ -->
+<div class="page" id="pg-pagamentos">
+  <div class="ph"><h1>Pagamentos</h1><p>Gestão das tuas prestações.</p></div>
+  <div class="alert al-o">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    <span><strong>Atenção:</strong> tens 1 pagamento urgente nos próximos 5 dias.</span>
+  </div>
+  <div class="card">
+    <div class="pay-trip">
+      <div class="pt-head">Picos da Europa <span class="pill pill-g">Total: €480</span></div>
+      <div class="pay-phases">
+        <div class="pay-phase paid">
+          <div class="pp-status pps-paid"><svg class="ic" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="pp-info"><div class="pp-name">1.ª Prestação — Reserva</div><div class="pp-date">Pago em 10 Jan 2026</div></div>
+          <div class="pp-amount paid">€160</div>
+        </div>
+        <div class="pay-phase paid">
+          <div class="pp-status pps-paid"><svg class="ic" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="pp-info"><div class="pp-name">2.ª Prestação</div><div class="pp-date">Pago em 4 Fev 2026</div></div>
+          <div class="pp-amount paid">€160</div>
+        </div>
+        <div class="pay-phase">
+          <div class="pp-status pps-future"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <div class="pp-info"><div class="pp-name">3.ª Prestação — Restante</div><div class="pp-date">Vence 25 Mar 2026</div></div>
+          <div class="pp-amount">€160</div>
+        </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="pay-trip">
+      <div class="pt-head">Islândia 2026 <span class="pill pill-o">1 pagamento urgente</span></div>
+      <div class="pay-phases">
+        <div class="pay-phase paid">
+          <div class="pp-status pps-paid"><svg class="ic" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="pp-info"><div class="pp-name">1.ª Prestação — Reserva</div><div class="pp-date">Pago em 15 Jan 2026</div></div>
+          <div class="pp-amount paid">€450</div>
+        </div>
+        <div class="pay-phase urgent">
+          <div class="pp-status pps-urgent"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+          <div class="pp-info"><div class="pp-name">2.ª Prestação — <strong>URGENTE</strong></div><div class="pp-date" style="color:var(--orange)">Vence em 5 dias — 14 Mar 2026</div></div>
+          <div class="pp-amount urgent">€720</div>
+        </div>
+        <div class="pay-phase paid" style="opacity:.5">
+          <div class="pp-status pps-future"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <div class="pp-info"><div class="pp-name">3.ª Prestação — Restante</div><div class="pp-date">Vence 1 Jun 2026</div></div>
+          <div class="pp-amount">€720</div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-4">
+      <button class="btn btn-o" style="width:100%;justify-content:center">
+        <svg class="ic" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        Pagar €720 agora — Islândia 2026
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ FEEDBACK ═══════════════ -->
+<div class="page" id="pg-feedback">
+  <div class="ph"><h1>Feedback</h1><p>Partilha a tua experiência com a Borealis.</p></div>
+  <div class="fb-list">
+    <div class="fb-card">
+      <div class="fb-head">
+        <div><div class="fb-trip">Picos da Europa</div><div class="fb-date">20–23 Mar 2026</div></div>
+        <span class="pill pill-gray">Próximo fim de semana</span>
+      </div>
+      <div class="fb-blocked">
+        <svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Disponível após 23 Mar 2026
+      </div>
+    </div>
+    <div class="fb-card">
+      <div class="fb-head">
+        <div><div class="fb-trip">Caminho de Santiago — Etapa 5</div><div class="fb-date">Fev 2026</div></div>
+        <span class="pill pill-o">Pendente</span>
+      </div>
+      <div class="stars" id="stars-santiago" onclick="rateStar(this,event)">
+        <svg class="star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg class="star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg class="star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg class="star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg class="star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </div>
+      <div class="fb-tags">
+        <button class="fb-tag sel" onclick="this.classList.toggle('sel')">Guia excelente</button>
+        <button class="fb-tag" onclick="this.classList.toggle('sel')">Percurso bem sinalizado</button>
+        <button class="fb-tag sel" onclick="this.classList.toggle('sel')">Grupo harmonioso</button>
+        <button class="fb-tag" onclick="this.classList.toggle('sel')">Alojamento bom</button>
+        <button class="fb-tag" onclick="this.classList.toggle('sel')">Ritmo adequado</button>
+      </div>
+      <textarea class="fb-textarea mb-3" placeholder="Conta-nos mais sobre a tua experiência...">Uma etapa incrível! O Hugo conhece todos os atalhos e sítios especiais. O grupo era muito simpático e o ritmo estava perfeito para todos.</textarea>
+      <button class="btn btn-p">
+        <svg class="ic" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        Enviar Feedback
+      </button>
+    </div>
+    <div class="fb-card" style="opacity:.85">
+      <div class="fb-head">
+        <div><div class="fb-trip">Dolomitas — Grande Traversata</div><div class="fb-date">Ago 2025</div></div>
+        <span class="pill pill-g">Enviado</span>
+      </div>
+      <div class="fb-sent">
+        <div class="fb-rating">
+          <svg class="fb-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="fb-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="fb-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="fb-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="fb-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <div style="font-style:italic;color:var(--ink2)">"Viagem das nossas vidas. Os Dolomitas em agosto são simplesmente impossíveis de descrever. Hugo ao melhor nível."</div>
+        <div style="font-size:11px;color:var(--ink4);margin-top:6px">Enviado em Set 2025 · Obrigado pelo teu feedback!</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ SUPORTE ═══════════════ -->
+<div class="page" id="pg-suporte">
+  <div class="ph"><h1>Suporte Directo</h1><p>Fala com o Hugo ou com a equipa Borealis.</p></div>
+  <div class="card">
+    <div class="card-hd"><div class="card-title">Como nos contactar</div></div>
+    <div class="g2" style="gap:12px">
+      <div style="padding:16px;background:var(--sand);border-radius:var(--r);border:1px solid var(--line);text-align:center">
+        <svg class="ic16" style="margin:0 auto 8px;color:var(--g700)" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 5.48 5.48l.96-.96a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 15.5v1.42z"/></svg>
+        <div style="font-family:var(--f-head);font-weight:600;font-size:13px;margin-bottom:4px">Telefone</div>
+        <div style="font-size:13px;color:var(--g700);font-weight:600">+351 910 910 930</div>
+        <div style="font-size:11px;color:var(--ink4);margin-top:2px">Seg–Sex · 9h–18h</div>
+      </div>
+      <div style="padding:16px;background:var(--sand);border-radius:var(--r);border:1px solid var(--line);text-align:center">
+        <svg class="ic16" style="margin:0 auto 8px;color:var(--g700)" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <div style="font-family:var(--f-head);font-weight:600;font-size:13px;margin-bottom:4px">Email</div>
+        <div style="font-size:13px;color:var(--g700);font-weight:600">ola@borealis.travel</div>
+        <div style="font-size:11px;color:var(--ink4);margin-top:2px">Resposta em 24h</div>
+      </div>
+      <div style="padding:16px;background:var(--sand);border-radius:var(--r);border:1px solid var(--line);text-align:center">
+        <svg class="ic16" style="margin:0 auto 8px;color:var(--g700)" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <div style="font-family:var(--f-head);font-weight:600;font-size:13px;margin-bottom:4px">WhatsApp</div>
+        <div style="font-size:13px;color:var(--g700);font-weight:600">+351 910 910 930</div>
+        <div style="font-size:11px;color:var(--ink4);margin-top:2px">Resposta típica: 45 min</div>
+      </div>
+      <div style="padding:16px;background:var(--sand);border-radius:var(--r);border:1px solid var(--line);text-align:center">
+        <svg class="ic16" style="margin:0 auto 8px;color:var(--g700)" viewBox="0 0 24 24"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 14 8 14s8-8.75 8-14a8 8 0 0 0-8-8z"/></svg>
+        <div style="font-family:var(--f-head);font-weight:600;font-size:13px;margin-bottom:4px">Escritório</div>
+        <div style="font-size:13px;color:var(--g700);font-weight:600">Lisboa, Portugal</div>
+        <div style="font-size:11px;color:var(--ink4);margin-top:2px">Visita com marcação</div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-hd"><div class="card-title">Envia uma mensagem</div></div>
+    <p style="font-size:12px;color:var(--ink3);margin-bottom:14px">Deixa aqui a tua dúvida ou nota para o Hugo. A equipa responde em menos de 2 horas úteis.</p>
+    <textarea style="width:100%;padding:10px;border:1px solid var(--line);border-radius:var(--r);font-family:var(--f-body);font-size:13px;resize:vertical;min-height:90px;outline:none;transition:border-color var(--t);line-height:1.5" placeholder="Escreve aqui a tua mensagem..." onfocus="this.style.borderColor='var(--g300)'" onblur="this.style.borderColor='var(--line)'"></textarea>
+    <div style="margin-top:10px">
+      <button class="btn btn-p" onclick="this.textContent='✓ Mensagem enviada!';this.style.background='var(--g500)'">Enviar Mensagem</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ NINER ═══════════════ -->
+<div class="page" id="pg-niner">
+  <div class="ph"><h1>O Meu Niner</h1><p>Hugo Palma é o teu guia na Borealis.</p></div>
+  <div class="niner-card">
+    <div class="niner-head">
+      <div class="niner-av">HP</div>
+      <div>
+        <div class="niner-name">Hugo Palma</div>
+        <div class="niner-role">Guia Sénior · Fundador da Borealis · 25 anos de experiência</div>
+      </div>
+    </div>
+    <div class="niner-body">
+      <div class="niner-msg">"A semana que aí vem vai ter condições perfeitas nos Picos. Nevoeiro de manhã cedo mas vamos ter sol total após o almoço. Tragam camadas intermédias e disposição para maravilhamentos."</div>
+      <div class="niner-sig">— Hugo, 09 Mar 2026</div>
+      <div class="mt-3"><button class="btn btn-p btn-sm" onclick="showPage('suporte')">
+        <svg class="ic" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Responder ao Hugo
+      </button></div>
+      <div class="niner-hist mt-4">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:8px">Mensagens anteriores</div>
+        <div class="nh-item"><div class="nh-date">28 Fev 2026</div>Preparação concluída! Programa final enviado por email. Partimos 20 Mar às 7h30.</div>
+        <div class="nh-item"><div class="nh-date">15 Fev 2026</div>Falta 1 mês! Checklist actualizada com novas recomendações para as condições de março.</div>
+        <div class="nh-item"><div class="nh-date">10 Jan 2026</div>Reserva confirmada para os Picos da Europa. Bem-vindo a mais uma aventura Borealis!</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ PONTOS DE ENCONTRO ═══════════════ -->
+<div class="page" id="pg-pontos">
+  <div class="ph"><h1>Pontos de Encontro</h1><p>Picos da Europa — 20 Mar 2026 · Partida às 9h00.</p></div>
+  <div class="map-wrap">
+    <div class="map-svg-wrap" style="height:220px">
+      <svg viewBox="0 0 700 220" style="width:100%;height:100%">
+        <rect width="700" height="220" fill="#e8e0d0"/>
+        <path d="M0 180 Q100 140 200 160 Q300 175 400 145 Q500 115 600 130 Q650 138 700 120 L700 220 L0 220Z" fill="#c8bfa8" opacity=".5"/>
+        <path d="M0 200 Q150 180 300 190 Q450 198 600 185 Q650 182 700 180 L700 220 L0 220Z" fill="#b5a88e" opacity=".4"/>
+        <circle cx="140" cy="135" r="8" fill="#1a4a2e"/>
+        <text x="140" y="118" text-anchor="middle" font-size="10" font-weight="700" fill="#1a4a2e" font-family="DM Sans,sans-serif">A</text>
+        <text x="140" y="158" text-anchor="middle" font-size="9" fill="#3d3d3a" font-family="DM Sans,sans-serif">Lisboa</text>
+        <circle cx="350" cy="105" r="8" fill="#1a4a2e"/>
+        <text x="350" y="88" text-anchor="middle" font-size="10" font-weight="700" fill="#1a4a2e" font-family="DM Sans,sans-serif">B</text>
+        <text x="350" y="126" text-anchor="middle" font-size="9" fill="#3d3d3a" font-family="DM Sans,sans-serif">Braga</text>
+        <circle cx="540" cy="95" r="8" fill="#e85d04"/>
+        <text x="540" y="78" text-anchor="middle" font-size="10" font-weight="700" fill="#e85d04" font-family="DM Sans,sans-serif">C</text>
+        <text x="540" y="116" text-anchor="middle" font-size="9" fill="#3d3d3a" font-family="DM Sans,sans-serif">Cangas de Onís</text>
+        <line x1="148" y1="135" x2="342" y2="108" stroke="#1a4a2e" stroke-width="1.5" stroke-dasharray="4,3" opacity=".5"/>
+        <line x1="358" y1="105" x2="532" y2="97" stroke="#1a4a2e" stroke-width="1.5" stroke-dasharray="4,3" opacity=".5"/>
+      </svg>
+    </div>
+    <div class="meet-points">
+      <div class="mp-card sel" onclick="selectPoint(this)">
+        <div class="mp-head">
+          <div class="mp-label">A — Lisboa (Parque das Nações)</div>
+          <span class="pill pill-g">Confirmado</span>
+        </div>
+        <div class="mp-loc">
+          <svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 14 8 14s8-8.75 8-14a8 8 0 0 0-8-8z"/></svg>
+          Parque das Nações, Lisboa · 20 Mar às 7h30
+        </div>
+        <div class="mp-parts">
+          <div class="mp-av">ZF</div><div class="mp-av">MC</div><div class="mp-av">RP</div>
+          <div class="mp-count">+2 confirmados</div>
+        </div>
+        <div class="ride-btns">
+          <button class="ride-btn sel-offer" onclick="event.stopPropagation()">Ofereço boleia</button>
+          <button class="ride-btn" onclick="event.stopPropagation()">Preciso de boleia</button>
+        </div>
+      </div>
+      <div class="mp-card" onclick="selectPoint(this)">
+        <div class="mp-head">
+          <div class="mp-label">B — Braga (EN101)</div>
+          <span class="pill pill-gray">5 participantes</span>
+        </div>
+        <div class="mp-loc">
+          <svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 14 8 14s8-8.75 8-14a8 8 0 0 0-8-8z"/></svg>
+          EN101, junto à saída Norte · 20 Mar às 8h30
+        </div>
+        <div class="mp-parts">
+          <div class="mp-av">JS</div><div class="mp-av">TF</div><div class="mp-av">AM</div>
+          <div class="mp-count">+2 confirmados</div>
+        </div>
+        <div class="ride-btns">
+          <button class="ride-btn" onclick="event.stopPropagation()">Ofereço boleia</button>
+          <button class="ride-btn" onclick="event.stopPropagation()">Preciso de boleia</button>
+        </div>
+      </div>
+      <div class="mp-card" onclick="selectPoint(this)">
+        <div class="mp-head">
+          <div class="mp-label">C — Cangas de Onís (Base)</div>
+          <span class="pill pill-gray">Ponto de chegada</span>
+        </div>
+        <div class="mp-loc">
+          <svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 14 8 14s8-8.75 8-14a8 8 0 0 0-8-8z"/></svg>
+          Parque Arenas de Cabrales · 20 Mar às 9h00
+        </div>
+        <div class="mp-parts">
+          <div class="mp-av">HP</div>
+          <div class="mp-count">Hugo espera aqui</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ RELATÓRIO ═══════════════ -->
+<div class="page" id="pg-relatorio">
+  <div class="ph"><h1>Relatório — Caminho de Santiago Etapa 5</h1><p>Fevereiro 2026 · Trilho completado</p></div>
+  <div class="report-hero">
+    <div class="th-label">Perfil de Altitude</div>
+    <svg class="altitude-svg" viewBox="0 0 640 80" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="altGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="rgba(255,255,255,.25)"/>
+          <stop offset="100%" stop-color="rgba(255,255,255,.03)"/>
+        </linearGradient>
+      </defs>
+      <path d="M0 75 L40 70 L100 55 L150 40 L200 28 L260 18 L300 10 L340 22 L380 35 L420 50 L480 42 L530 58 L580 65 L640 75 L640 80 L0 80Z" fill="url(#altGrad)"/>
+      <path d="M0 75 L40 70 L100 55 L150 40 L200 28 L260 18 L300 10 L340 22 L380 35 L420 50 L480 42 L530 58 L580 65 L640 75" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2"/>
+      <circle cx="300" cy="10" r="4" fill="#fff"/>
+      <text x="300" y="6" text-anchor="middle" font-size="9" fill="rgba(255,255,255,.8)" font-family="DM Sans,sans-serif">1.320m</text>
+    </svg>
+  </div>
+  <div class="rep-stats">
+    <div class="rep-stat"><div class="rs-val">27km</div><div class="rs-lbl">Distância</div></div>
+    <div class="rep-stat"><div class="rs-val">↑1.320m</div><div class="rs-lbl">Desnível</div></div>
+    <div class="rep-stat"><div class="rs-val">8h42m</div><div class="rs-lbl">Duração</div></div>
+    <div class="rep-stat"><div class="rs-val">3.1km/h</div><div class="rs-lbl">Ritmo médio</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title" style="margin-bottom:10px">Sobre esta etapa</div>
+    <p style="font-size:13px;color:var(--ink2);line-height:1.8">Uma das etapas mais desafiantes do Caminho — e também das mais recompensadoras. Partimos de O Cebreiro ainda com neblina matinal e subimos até ao alto de San Roque, onde o panorama da Galiza nos deixou sem palavras. O grupo manteve um ritmo constante e chegámos a Triacastela com energia para comemorar.</p>
+  </div>
+  <div class="photo-grid">
+    <div class="ph0" style="background:var(--g100)"><span style="font-size:32px">🏔</span></div>
+    <div class="ph1"><span>🌄</span></div>
+    <div class="ph2"><span>🌿</span></div>
+    <div class="ph3"><span>⛪</span></div>
+    <div class="ph4"><span>🎒</span></div>
+  </div>
+  <div class="share-card">
+    <div class="th-label">Partilhar esta conquista</div>
+    <div class="sc-data">
+      <div class="sc-d"><div class="sc-v">27km</div><div class="sc-l">Distância</div></div>
+      <div class="sc-d"><div class="sc-v">↑1.320m</div><div class="sc-l">Desnível</div></div>
+      <div class="sc-d"><div class="sc-v">8h42m</div><div class="sc-l">Duração</div></div>
+      <div class="sc-d"><div class="sc-v">⭐ 5/5</div><div class="sc-l">Avaliação</div></div>
+    </div>
+    <div class="share-btns">
+      <button class="btn sb-ig">
+        <svg class="ic" viewBox="0 0 24 24" stroke="#fff"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="#fff"/></svg>
+        Instagram
+      </button>
+      <button class="btn sb-fb">
+        <svg class="ic" viewBox="0 0 24 24" stroke="#fff"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        Facebook
+      </button>
+      <button class="btn sb-dl">
+        <svg class="ic" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download
+      </button>
+    </div>
+  </div>
+</div>
+
+  </main>
+</div>
+<script>
+// ─── NAVIGATION ───
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(b=>b.classList.remove('active'));
+  const pg=document.getElementById('pg-'+id);
+  if(pg) pg.classList.add('active');
+  const pageToNav={dashboard:'dashboard',viagens:'viagens',checklist:'checklist',pagamentos:'pagamentos',feedback:'feedback',suporte:'suporte',niner:'niner',pontos:'pontos',relatorio:'relatorio'};
+  document.querySelectorAll('.sb-item').forEach(b=>{
+    const onclick=b.getAttribute('onclick')||'';
+    if(onclick.includes("'"+id+"'")) b.classList.add('active');
+  });
+}
+
+// ─── NOTIFICATIONS ───
+function toggleNotif(){
+  const p=document.getElementById('notifPanel');
+  p.classList.toggle('open');
+}
+document.addEventListener('click',function(e){
+  const panel=document.getElementById('notifPanel');
+  const btn=document.getElementById('notifBtn');
+  if(panel.classList.contains('open')&&!panel.contains(e.target)&&!btn.contains(e.target)){
+    panel.classList.remove('open');
+  }
+});
+
+// ─── CHECKLIST TOGGLE ───
+function toggleCheck(el){
+  el.classList.toggle('checked');
+  updateProgress();
+}
+function toggleCLI(row){
+  const check=row.querySelector('.cli-check');
+  const name=row.querySelector('.cli-name');
+  check.classList.toggle('on');
+  name.classList.toggle('done');
+  updateProgress();
+}
+function updateProgress(){
+  const all=document.querySelectorAll('#checklist-container .cli-check');
+  const done=document.querySelectorAll('#checklist-container .cli-check.on');
+  const pct=all.length?Math.round(done.length/all.length*100):0;
+  const bar=document.getElementById('cl-progress');
+  if(bar) bar.style.width=pct+'%';
+}
+
+// ─── CHECKLIST FILTER ───
+function filterCat(btn, cat){
+  document.querySelectorAll('.cl-cat-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.checklist-group').forEach(g=>{
+    g.style.display=(cat==='all'||g.dataset.cat===cat)?'block':'none';
+  });
+}
+
+// ─── STARS FEEDBACK ───
+function rateStar(container, e){
+  const stars=[...container.querySelectorAll('.star')];
+  const rect=container.getBoundingClientRect();
+  const x=e.clientX-rect.left;
+  const starW=rect.width/stars.length;
+  const idx=Math.floor(x/starW);
+  stars.forEach((s,i)=>s.classList.toggle('lit',i<=idx));
+}
+
+// ─── MAP POINT SELECT ───
+function selectPoint(card){
+  document.querySelectorAll('.mp-card').forEach(c=>c.classList.remove('sel'));
+  card.classList.add('sel');
+}
+
+
+</script>
+</body>
+</html>
