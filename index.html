@@ -72,6 +72,8 @@ svg{display:block;flex-shrink:0}
 .sb-islandia svg,.sb-islandia:hover svg,.sb-islandia.active svg{color:#1a5276!important}
 .sb-notif{margin-left:auto;background:var(--orange);color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;padding:0 4px;border-radius:8px;display:flex;align-items:center;justify-content:center}
 .star.lit{color:var(--orange)!important}
+.share-thumb.active{border-color:var(--g500)!important;box-shadow:0 0 0 2px var(--g300)}
+.share-thumb:hover{border-color:var(--g300)!important}
 
 /* Trip header in sidebar */
 .sb-trip-header{padding:8px 18px;font-size:13px;font-weight:600;color:var(--g700);display:flex;align-items:center;justify-content:space-between;cursor:pointer;width:100%;border:none;background:none;transition:all var(--t)}
@@ -583,7 +585,7 @@ svg{display:block;flex-shrink:0}
         <div class="sb-stat"><span class="sb-val">2351m</span><span class="sb-lbl">Alt. Máxima</span></div>
       </div>
       <div style="margin-top:8px;text-align:center">
-        <button onclick="openShareCard()" style="font-size:10px;font-weight:600;color:var(--g700);background:var(--g50);border:1px solid var(--g100);border-radius:20px;padding:4px 12px;cursor:pointer;transition:all var(--t)">
+        <button onclick="openShareCard('global')" style="font-size:10px;font-weight:600;color:var(--g700);background:var(--g50);border:1px solid var(--g100);border-radius:20px;padding:4px 12px;cursor:pointer;transition:all var(--t)">
           <svg viewBox="0 0 24 24" style="width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:inline;vertical-align:-1px"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
           Partilhar stats
         </button>
@@ -887,7 +889,13 @@ svg{display:block;flex-shrink:0}
         </div>
         <div style="font-size:12px;opacity:.8">🇪🇸 14 participantes · 62km · 3 etapas</div>
       </div>
-      <button style="background:#25d366;color:#fff;border:none;padding:5px 11px;border-radius:5px;font-size:10px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:4px;flex-shrink:0;margin-top:2px" onclick="window.open('https://wa.me/351910000000','_blank')"><svg viewBox="0 0 24 24" style="width:11px;height:11px;fill:#fff;display:inline"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</button>
+      <div style="display:flex;gap:5px;flex-shrink:0;margin-top:2px">
+        <button onclick="openShareCard({trip:'picos',name:'Picos da Europa',days:'3',km:'62',gain:'3.2k',max:'2648'})" style="background:rgba(255,255,255,.2);color:#fff;border:none;padding:5px 11px;border-radius:5px;font-size:10px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:4px;backdrop-filter:blur(4px)">
+          <svg viewBox="0 0 24 24" style="width:11px;height:11px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+          Partilhar
+        </button>
+        <button style="background:#25d366;color:#fff;border:none;padding:5px 11px;border-radius:5px;font-size:10px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:4px" onclick="window.open('https://wa.me/351910000000','_blank')"><svg viewBox="0 0 24 24" style="width:11px;height:11px;fill:#fff;display:inline"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</button>
+      </div>
     </div>
   </div>
 
@@ -929,9 +937,9 @@ svg{display:block;flex-shrink:0}
           <div style="aspect-ratio:1;border-radius:4px;overflow:hidden;cursor:pointer;position:relative"><img src="https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=80&h=80&fit=crop" style="width:100%;height:100%;object-fit:cover" loading="lazy"><div style="position:absolute;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700">+27</div></div>
         </div>
       </div>
-      <a href="#" onclick="event.preventDefault();alert('A abrir Google Drive...')" style="font-size:10px;font-weight:600;color:var(--g700);display:flex;align-items:center;justify-content:center;gap:3px">
+      <a href="#" onclick="event.preventDefault();alert('A abrir Google Photos...')" style="font-size:10px;font-weight:600;color:var(--g700);display:flex;align-items:center;justify-content:center;gap:3px">
         <svg viewBox="0 0 24 24" style="width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        Ver no Drive
+        Google Photos
       </a>
     </div>
   </div>
@@ -2129,58 +2137,340 @@ document.querySelectorAll('#pg-trip-picos .stars').forEach(container=>{
   });
 });
 
-// ─── SHARE CARD MODAL ───
-function openShareCard(){
-  document.getElementById('shareModal').style.display='flex';
+// ─── SHARE CARD MODAL (Strava-style) ───
+window._shareCtx = null; // 'global' or {trip:'picos', name:'Picos da Europa', ...}
+
+function openShareCard(ctx){
+  window._shareCtx = ctx || 'global';
+  const m = document.getElementById('shareModal');
+  // Reset to step 1 (photo picker)
+  document.getElementById('share-step-pick').style.display='';
+  document.getElementById('share-step-preview').style.display='none';
+  document.getElementById('share-bg-img').style.backgroundImage='none';
+  document.querySelectorAll('.share-thumb').forEach(t=>t.classList.remove('active'));
+  // Set stats based on context
+  _updateShareStats();
+  m.style.display='flex';
 }
 function closeShareCard(){
   document.getElementById('shareModal').style.display='none';
 }
+function _updateShareStats(){
+  const el = id => document.getElementById(id);
+  const grid = el('share-stats-grid');
+  const title = el('share-card-title');
+  const vs = (v,u,l) => `<div style="margin-bottom:10px"><div style="font-family:var(--f-head);font-size:30px;font-weight:800;color:#fff;line-height:1;text-shadow:0 2px 8px rgba(0,0,0,.5);letter-spacing:-.04em">${v}<span style="font-size:12px;font-weight:500;letter-spacing:0">${u}</span></div><div style="font-size:8px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.08em;margin-top:2px">${l}</div></div>`;
+
+  if(window._shareCtx === 'global'){
+    title.textContent = '';
+    // Stats go in a flex row: left stats, right = height bar (drawn by SVG)
+    grid.style.cssText = 'display:flex;align-items:flex-end;gap:14px';
+    grid.innerHTML = `
+      <div style="flex:1">
+        ${vs('11','','Viagens')}
+        ${vs('847','km','Trilhados')}
+        ${vs('12.4','k','Desnível ↑↓')}
+      </div>
+    `;
+    // SVG will draw the height bar on the right
+  } else {
+    const c = window._shareCtx;
+    title.textContent = c.name;
+    grid.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;gap:4px 12px';
+    grid.innerHTML = `
+      ${vs(c.days,'','Dias')}
+      ${vs(c.km,'km','Distância')}
+      ${vs(c.gain,'','Desnível ↑')}
+      ${vs(c.max,'m','Alt. Máxima')}
+    `;
+  }
+}
+function selectShareBg(thumb, url){
+  document.querySelectorAll('.share-thumb').forEach(t=>t.classList.remove('active'));
+  thumb.classList.add('active');
+  thumb.dataset.url = url;
+  document.getElementById('share-bg-img').style.backgroundImage = 'url('+url+')';
+  // Auto-advance to preview
+  _showSharePreview(url);
+}
+function sharePickLocal(){
+  document.getElementById('share-local-input').click();
+}
+function shareLocalChosen(input){
+  if(!input.files||!input.files[0]) return;
+  const url = URL.createObjectURL(input.files[0]);
+  document.getElementById('share-bg-img').style.backgroundImage = 'url('+url+')';
+  document.querySelectorAll('.share-thumb').forEach(t=>t.classList.remove('active'));
+  _showSharePreview(url);
+}
+function sharePickGooglePhotos(){
+  alert('A abrir Google Photos... (integração futura)');
+}
+function _showSharePreview(url){
+  document.getElementById('share-step-pick').style.display='none';
+  document.getElementById('share-step-preview').style.display='';
+  document.getElementById('share-bg-img').style.backgroundImage = 'url('+url+')';
+  _drawShareElevation();
+}
+function _drawShareElevation(){
+  const svg = document.getElementById('share-elev-svg');
+  const ctx = window._shareCtx;
+
+  if(ctx === 'global'){
+    // ─── GLOBAL: Vertical height bar on right side ───
+    // The bar represents Everest (8849m), with markers for references + user max
+    svg.setAttribute('viewBox','0 0 244 180');
+    svg.style.height = '180px';
+    const REF = 8849; // Everest
+    const BAR_X = 200, BAR_W = 22, BAR_H = 160, BAR_Y0 = 10; // top of bar
+    const BAR_BOT = BAR_Y0 + BAR_H;
+
+    const markers = [
+      {h:8849, label:'Everest',       col:'rgba(255,255,255,.15)', text:'rgba(255,255,255,.3)'},
+      {h:4808, label:'Mont Blanc',    col:'rgba(255,255,255,.2)',  text:'rgba(255,255,255,.35)'},
+      {h:2351, label:'A tua máxima',  col:'var(--orange)',         text:'#fff', highlight:true},
+      {h:1993, label:'Serra da Estrela', col:'rgba(255,255,255,.15)', text:'rgba(255,255,255,.3)'},
+    ];
+
+    let html = `<defs>
+      <linearGradient id="hbarGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="rgba(255,255,255,.08)"/>
+        <stop offset="100%" stop-color="rgba(255,255,255,.03)"/>
+      </linearGradient>
+    </defs>`;
+
+    // Full bar (Everest height = full bar)
+    html += `<rect x="${BAR_X}" y="${BAR_Y0}" width="${BAR_W}" height="${BAR_H}" rx="4" fill="url(#hbarGrad)"/>`;
+
+    // Fill up to user max
+    const userFill = (2351/REF) * BAR_H;
+    html += `<rect x="${BAR_X}" y="${BAR_BOT - userFill}" width="${BAR_W}" height="${userFill}" rx="4" fill="var(--orange)" opacity=".35"/>`;
+
+    // Markers + labels on left of bar
+    markers.forEach(m => {
+      const y = BAR_BOT - (m.h / REF) * BAR_H;
+      // Tick line
+      html += `<line x1="${BAR_X - 3}" y1="${y}" x2="${BAR_X + BAR_W}" y2="${y}" stroke="${m.highlight ? m.col : 'rgba(255,255,255,.15)'}" stroke-width="${m.highlight ? 2 : 1}"/>`;
+      if(m.highlight){
+        // Dot
+        html += `<circle cx="${BAR_X - 8}" cy="${y}" r="4" fill="var(--orange)" stroke="#fff" stroke-width="1.5"/>`;
+        // Bold value
+        html += `<text x="${BAR_X - 16}" y="${y - 8}" text-anchor="end" fill="#fff" font-size="16" font-family="var(--f-head)" font-weight="800" style="text-shadow:0 2px 6px rgba(0,0,0,.6)">${m.h.toLocaleString('pt-PT')} m</text>`;
+        html += `<text x="${BAR_X - 16}" y="${y + 10}" text-anchor="end" fill="rgba(255,255,255,.6)" font-size="8" font-family="var(--f-head)" font-weight="600" letter-spacing=".04em">A TUA MÁXIMA</text>`;
+      } else {
+        html += `<text x="${BAR_X - 6}" y="${y - 4}" text-anchor="end" fill="${m.text}" font-size="7" font-family="var(--f-head)" font-weight="600">${m.h.toLocaleString('pt-PT')} m</text>`;
+        html += `<text x="${BAR_X - 6}" y="${y + 7}" text-anchor="end" fill="rgba(255,255,255,.22)" font-size="6" font-family="var(--f-head)" font-weight="500">${m.label}</text>`;
+      }
+    });
+
+    // Everest label at top
+    html += `<text x="${BAR_X + BAR_W/2}" y="${BAR_Y0 - 2}" text-anchor="middle" fill="rgba(255,255,255,.2)" font-size="6" font-family="var(--f-head)" font-weight="500">EVEREST</text>`;
+
+    svg.innerHTML = html;
+    return;
+  }
+
+  // ─── TRIP: Day-segmented elevation profile ───
+  svg.setAttribute('viewBox','0 0 244 65');
+  svg.style.height = '65px';
+  const W = 244, H = 65, PAD_TOP = 16, PAD_BOT = 4;
+  const dayColors = ['rgba(255,255,255,.8)','rgba(82,183,136,.9)','rgba(232,93,4,.85)'];
+  const dayFills  = ['rgba(255,255,255,.12)','rgba(82,183,136,.1)','rgba(232,93,4,.08)'];
+
+  let daySegments = [];
+  if(ctx.trip === 'picos'){
+    daySegments = [
+      {label:'Dia 1', data:[420,680,920,1280,1680,1920,2100]},
+      {label:'Dia 2', data:[2100,2280,2450,2580,2648,2500,2350,2100,1850,1620,1400,1250]},
+      {label:'Dia 3', data:[1250,1380,1400,1280,1100,950,820,700,620,580,560]}
+    ];
+  } else if(ctx.trip === 'somiedo' && window.SOMIEDO_DAYS){
+    daySegments = [
+      {label:'Dia 1', data:SOMIEDO_DAYS[1].data},
+      {label:'Dia 2', data:SOMIEDO_DAYS[2].data},
+      {label:'Dia 3', data:SOMIEDO_DAYS[3].data}
+    ];
+  } else {
+    daySegments = [{label:'', data:[800,1100,1400,1800,1500,1000,700]}];
+  }
+
+  const allPts = daySegments.flatMap(s=>s.data);
+  const mn = Math.min(...allPts), mx = Math.max(...allPts);
+  const range = mx - mn || 1;
+  const totalPts = allPts.length;
+  const step = W / (totalPts - 1);
+
+  let globalIdx = 0;
+  const segments = daySegments.map(seg => {
+    const coords = seg.data.map((v,i) => {
+      const x = Math.round((globalIdx + i) * step);
+      const y = Math.round(H - PAD_BOT - ((v - mn) / range) * (H - PAD_TOP - PAD_BOT));
+      return [x, y];
+    });
+    globalIdx += seg.data.length;
+    return { label: seg.label, data: seg.data, coords };
+  });
+
+  const peakGlobalIdx = allPts.indexOf(mx);
+  const pkX = Math.round(peakGlobalIdx * step);
+  const pkY = Math.round(H - PAD_BOT - ((mx - mn) / range) * (H - PAD_TOP - PAD_BOT));
+
+  let html = '<defs>';
+  segments.forEach((seg, si) => {
+    html += `<linearGradient id="segFill${si}" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="${dayFills[si % dayFills.length].replace(/[\d.]+\)$/,'.2)')}"/>
+      <stop offset="100%" stop-color="${dayFills[si % dayFills.length].replace(/[\d.]+\)$/,'.01)')}"/>
+    </linearGradient>`;
+  });
+  html += '</defs>';
+
+  segments.forEach((seg, si) => {
+    const c = seg.coords;
+    const polyLine = c.map(p=>p[0]+','+p[1]).join(' ');
+    const fillPoly = c[0][0]+','+H+' '+polyLine+' '+c[c.length-1][0]+','+H;
+    const col = dayColors[si % dayColors.length];
+    html += `<polygon points="${fillPoly}" fill="url(#segFill${si})"/>`;
+    html += `<polyline points="${polyLine}" fill="none" stroke="${col}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
+    if(si > 0 && seg.label){
+      const dx = c[0][0];
+      html += `<line x1="${dx}" y1="0" x2="${dx}" y2="${H}" stroke="rgba(255,255,255,.2)" stroke-width="1" stroke-dasharray="3,3"/>`;
+    }
+    if(seg.label){
+      const labelX = (c[0][0] + c[c.length-1][0]) / 2;
+      html += `<text x="${labelX}" y="9" text-anchor="middle" fill="rgba(255,255,255,.5)" font-size="7" font-family="var(--f-head)" font-weight="700" letter-spacing=".06em">${seg.label.toUpperCase()}</text>`;
+    }
+  });
+
+  html += `<circle cx="${pkX}" cy="${pkY}" r="3.5" fill="var(--orange)" stroke="#fff" stroke-width="1.5"/>`;
+  html += `<text x="${pkX}" y="${pkY - 8}" text-anchor="middle" fill="#fff" font-size="8" font-family="var(--f-head)" font-weight="800" style="text-shadow:0 1px 4px rgba(0,0,0,.7)">${mx.toLocaleString('pt-PT')} m</text>`;
+
+  svg.innerHTML = html;
+}
+function shareBackToPick(){
+  document.getElementById('share-step-pick').style.display='';
+  document.getElementById('share-step-preview').style.display='none';
+}
+function shareDownloadImage(){
+  const card = document.getElementById('share-card-render');
+  // Use html2canvas-like approach: render to canvas
+  // For prototype, just alert
+  alert('A gerar imagem para download...');
+}
+function shareToIG(){
+  alert('A gerar imagem para Instagram Stories...');
+}
 
 </script>
 
-<!-- ═══ SHARE MODAL ═══ -->
-<div id="shareModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:999;align-items:center;justify-content:center;backdrop-filter:blur(4px)" onclick="if(event.target===this)closeShareCard()">
-  <div style="width:420px;max-width:92vw;animation:fadeUp .2s ease">
-    <!-- SHARE CARD PREVIEW -->
-    <div style="background:linear-gradient(145deg,var(--g900) 0%,#1a4a2e 100%);border-radius:16px;padding:28px 24px 22px;color:#fff;position:relative;overflow:hidden">
-      <div style="position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:rgba(255,255,255,.03);border-radius:50%"></div>
-      <div style="position:absolute;bottom:-60px;left:-30px;width:200px;height:200px;background:rgba(255,255,255,.02);border-radius:50%"></div>
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:18px">
-        <div style="width:28px;height:28px;background:rgba(255,255,255,.12);border-radius:50%;display:flex;align-items:center;justify-content:center">
-          <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M3 17l4-8 5 6 3-4 6 6"/></svg>
+<!-- ═══ SHARE MODAL (Strava-style with photo picker) ═══ -->
+<div id="shareModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:999;align-items:center;justify-content:center;backdrop-filter:blur(6px)" onclick="if(event.target===this)closeShareCard()">
+  <div style="width:380px;max-width:94vw;animation:fadeUp .2s ease">
+
+    <!-- STEP 1: PICK PHOTO -->
+    <div id="share-step-pick" style="background:#fff;border-radius:16px;padding:22px 24px;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+        <div style="font-family:var(--f-head);font-size:15px;font-weight:700;color:var(--ink)">Escolhe uma foto de fundo</div>
+        <button onclick="closeShareCard()" style="width:28px;height:28px;border-radius:50%;border:none;background:var(--g50);color:var(--ink3);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center">✕</button>
+      </div>
+      <!-- Preset thumbnails -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px">
+        <div class="share-thumb" onclick="selectShareBg(this,'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=800&h=600&fit=crop')" style="aspect-ratio:4/5;border-radius:8px;overflow:hidden;cursor:pointer;border:3px solid transparent;transition:border-color .15s;position:relative">
+          <img src="https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=200&h=150&fit=crop" style="width:100%;height:100%;object-fit:cover" loading="lazy">
         </div>
-        <span style="font-family:var(--f-head);font-weight:700;font-size:13px;letter-spacing:-.02em">Borealis</span>
-        <span style="font-size:9px;color:rgba(255,255,255,.4);letter-spacing:.06em;text-transform:uppercase;margin-left:auto">on trekking</span>
+        <div class="share-thumb" onclick="selectShareBg(this,'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&h=600&fit=crop')" style="aspect-ratio:4/5;border-radius:8px;overflow:hidden;cursor:pointer;border:3px solid transparent;transition:border-color .15s">
+          <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=200&h=150&fit=crop" style="width:100%;height:100%;object-fit:cover" loading="lazy">
+        </div>
+        <div class="share-thumb" onclick="selectShareBg(this,'https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=800&h=600&fit=crop')" style="aspect-ratio:4/5;border-radius:8px;overflow:hidden;cursor:pointer;border:3px solid transparent;transition:border-color .15s">
+          <img src="https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=200&h=150&fit=crop" style="width:100%;height:100%;object-fit:cover" loading="lazy">
+        </div>
+        <div class="share-thumb" onclick="selectShareBg(this,'https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&h=600&fit=crop')" style="aspect-ratio:4/5;border-radius:8px;overflow:hidden;cursor:pointer;border:3px solid transparent;transition:border-color .15s">
+          <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=200&h=150&fit=crop" style="width:100%;height:100%;object-fit:cover" loading="lazy">
+        </div>
       </div>
-      <div style="font-family:var(--f-head);font-size:11px;color:rgba(255,255,255,.5);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px">O meu percurso</div>
-      <div style="font-family:var(--f-head);font-size:20px;font-weight:700;margin-bottom:16px">Zé Forjaz</div>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px">
-        <div><div style="font-family:var(--f-head);font-size:24px;font-weight:700">11</div><div style="font-size:9px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.06em">Viagens</div></div>
-        <div><div style="font-family:var(--f-head);font-size:24px;font-weight:700">847<span style="font-size:11px;font-weight:400">km</span></div><div style="font-size:9px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.06em">Trilhados</div></div>
-        <div><div style="font-family:var(--f-head);font-size:24px;font-weight:700">12.4<span style="font-size:11px;font-weight:400">k</span></div><div style="font-size:9px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.06em">Desnível ↑↓</div></div>
-        <div><div style="font-family:var(--f-head);font-size:24px;font-weight:700">2351<span style="font-size:11px;font-weight:400">m</span></div><div style="font-size:9px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.06em">Alt. Máxima</div></div>
+      <!-- Upload options -->
+      <div style="display:flex;gap:8px">
+        <button onclick="sharePickLocal()" style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:10px;border-radius:8px;font-size:12px;font-weight:600;background:#fff;color:var(--ink2);border:1.5px dashed var(--line);cursor:pointer;transition:all .15s" onmouseover="this.style.borderColor='var(--g500)';this.style.color='var(--g700)'" onmouseout="this.style.borderColor='var(--line)';this.style.color='var(--ink2)'">
+          <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          O meu computador
+        </button>
+        <button onclick="sharePickGooglePhotos()" style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:10px;border-radius:8px;font-size:12px;font-weight:600;background:#fff;color:var(--ink2);border:1.5px solid var(--line);cursor:pointer;transition:all .15s" onmouseover="this.style.borderColor='#4285f4';this.style.color='#4285f4'" onmouseout="this.style.borderColor='var(--line)';this.style.color='var(--ink2)'">
+          <svg viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M12 2L2 7l10 5 10-5-10-5z" fill="#4285f4"/><path d="M2 17l10 5 10-5" stroke="#34a853" fill="none" stroke-width="2"/><path d="M2 12l10 5 10-5" stroke="#fbbc05" fill="none" stroke-width="2"/></svg>
+          Google Photos
+        </button>
       </div>
-      <div style="display:flex;align-items:center;gap:6px;padding-top:12px;border-top:1px solid rgba(255,255,255,.08)">
-        <span style="display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg,#c2410c,var(--orange));padding:3px 8px;border-radius:12px;font-size:9px;font-weight:700">
-          <svg viewBox="0 0 24 24" style="width:9px;height:9px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M3 17l4-8 5 6 3-4 6 6"/></svg>
-          Summit
-        </span>
-        <span style="font-size:9px;color:rgba(255,255,255,.35)">borealis.travel</span>
+      <input type="file" id="share-local-input" accept="image/*" onchange="shareLocalChosen(this)" style="display:none">
+    </div>
+
+    <!-- STEP 2: PREVIEW + ACTIONS -->
+    <div id="share-step-preview" style="display:none">
+
+      <!-- iPhone frame wrapper -->
+      <div style="display:flex;justify-content:center">
+        <div style="position:relative;width:280px;border-radius:36px;border:4px solid #1a1a1a;background:#1a1a1a;box-shadow:0 20px 60px rgba(0,0,0,.5);overflow:hidden">
+          <!-- Notch -->
+          <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:100px;height:22px;background:#1a1a1a;border-radius:0 0 16px 16px;z-index:10"></div>
+          <!-- Screen: 9:16 story card -->
+          <div id="share-card-render" style="position:relative;aspect-ratio:9/16;overflow:hidden;border-radius:32px">
+            <!-- Background photo -->
+            <div id="share-bg-img" style="position:absolute;inset:0;background-size:cover;background-position:center;background-repeat:no-repeat"></div>
+            <!-- Dark overlay -->
+            <div id="share-overlay" style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.82) 0%,rgba(0,0,0,.3) 45%,rgba(0,0,0,.15) 100%)"></div>
+            <!-- Content -->
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:32px 18px 16px">
+              <!-- Top: Borealis branding -->
+              <div style="display:flex;align-items:center;gap:6px">
+                <div style="width:24px;height:24px;background:rgba(255,255,255,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px)">
+                  <svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round"><path d="M3 17l4-8 5 6 3-4 6 6"/></svg>
+                </div>
+                <span style="font-family:var(--f-head);font-weight:700;font-size:12px;color:#fff;letter-spacing:-.02em;text-shadow:0 1px 4px rgba(0,0,0,.5)">Borealis</span>
+                <span style="font-size:7px;color:rgba(255,255,255,.4);letter-spacing:.08em;text-transform:uppercase">on trekking</span>
+              </div>
+              <!-- Bottom block -->
+              <div>
+                <!-- Visual: SVG area (height bar for global, altimetria for trips) -->
+                <div id="share-visual-wrap" style="margin-bottom:14px">
+                  <svg id="share-elev-svg" viewBox="0 0 244 180" style="width:100%;overflow:visible" preserveAspectRatio="xMidYMid meet"></svg>
+                </div>
+                <!-- Title -->
+                <div id="share-card-title" style="font-family:var(--f-head);font-size:20px;font-weight:800;color:#fff;letter-spacing:-.03em;margin-bottom:14px;text-shadow:0 2px 8px rgba(0,0,0,.6);line-height:1.1"></div>
+                <!-- Stats grid (populated by JS) -->
+                <div id="share-stats-grid" style="margin-bottom:14px"></div>
+                <!-- Footer bar -->
+                <div style="display:flex;align-items:center;gap:6px;padding-top:8px;border-top:1px solid rgba(255,255,255,.1)">
+                  <span style="display:inline-flex;align-items:center;gap:3px;background:linear-gradient(135deg,#c2410c,var(--orange));padding:2px 7px;border-radius:10px;font-size:8px;font-weight:700;color:#fff">
+                    <svg viewBox="0 0 24 24" style="width:8px;height:8px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round"><path d="M3 17l4-8 5 6 3-4 6 6"/></svg>
+                    Summit
+                  </span>
+                  <span style="font-size:7px;color:rgba(255,255,255,.35);letter-spacing:.04em">borealis.travel</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Home indicator -->
+          <div style="height:18px;display:flex;align-items:center;justify-content:center">
+            <div style="width:80px;height:4px;background:rgba(255,255,255,.3);border-radius:2px"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action buttons -->
+      <div style="display:flex;gap:8px;margin-top:14px;justify-content:center;flex-wrap:wrap">
+        <button onclick="shareBackToPick()" style="display:flex;align-items:center;gap:5px;padding:9px 13px;border-radius:8px;font-size:11px;font-weight:500;background:#fff;color:var(--ink3);border:1px solid var(--line);cursor:pointer">
+          <svg viewBox="0 0 24 24" style="width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><polyline points="15 18 9 12 15 6"/></svg>
+          Mudar foto
+        </button>
+        <button onclick="shareToIG()" style="display:flex;align-items:center;gap:5px;padding:9px 16px;border-radius:8px;font-size:11px;font-weight:600;background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff;border:none;cursor:pointer">
+          <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          Stories
+        </button>
+        <button onclick="shareDownloadImage()" style="display:flex;align-items:center;gap:5px;padding:9px 16px;border-radius:8px;font-size:11px;font-weight:600;background:var(--g700);color:#fff;border:none;cursor:pointer">
+          <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Guardar
+        </button>
+        <button onclick="closeShareCard()" style="padding:9px 13px;border-radius:8px;font-size:11px;font-weight:500;background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.15);cursor:pointer;backdrop-filter:blur(4px)">Fechar</button>
       </div>
     </div>
-    <!-- SHARE BUTTONS -->
-    <div style="display:flex;gap:8px;margin-top:12px;justify-content:center">
-      <button onclick="alert('A gerar imagem para Instagram...')" style="display:flex;align-items:center;gap:6px;padding:10px 18px;border-radius:8px;font-size:12px;font-weight:600;background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff;border:none;cursor:pointer">
-        <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-        Instagram Stories
-      </button>
-      <button onclick="alert('Link copiado!')" style="display:flex;align-items:center;gap:6px;padding:10px 18px;border-radius:8px;font-size:12px;font-weight:600;background:var(--g700);color:#fff;border:none;cursor:pointer">
-        <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
-        Guardar Imagem
-      </button>
-      <button onclick="closeShareCard()" style="display:flex;align-items:center;gap:6px;padding:10px 18px;border-radius:8px;font-size:12px;font-weight:500;background:#fff;color:var(--ink3);border:1px solid var(--line);cursor:pointer">Fechar</button>
-    </div>
+
   </div>
 </div>
 
